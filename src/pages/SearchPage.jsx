@@ -5,16 +5,23 @@ export default function SearchPage() {
     return (
         <main>
             <h2>Search</h2>
-            { searchParams.toString() ? (
+            { searchParams.size ? (
                 <div>
-                    <p>
-                        Title: {searchParams.get("title")}
-                    </p>
-                    <p>
-                        Author: {searchParams.get("author")}
-                    </p>
+                    {
+                        Array.from(searchParams.entries()).map(([ key, value ], index) => {
+                            return (
+                                <p key={index}>
+                                    {key}: {value}
+                                </p>
+                            )
+                        })
+                    }
                 </div>
-            ) : (<></>) }
+            ) : (
+                <p>
+                    Enter search parameters
+                </p>
+            ) }
         </main>
     )
 }
