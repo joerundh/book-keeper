@@ -2,7 +2,7 @@ import { v4 as uuid } from "uuid";
 
 const toKebabCase = str => str.toLowerCase()
                                 .split(/\s+/)
-                                .filter(char => char.match(/[a-z0-9]"/))
+                                .flatMap(s => s.split("").filter(char => char.match(/[a-z0-9]"/)).join(""))
                                 .join("-");
 
 export default function Storage(str) {
@@ -62,7 +62,7 @@ export default function Storage(str) {
         return "";
     }
 
-    this.getItem(key) = function() {
+    this.getItem = function(key) {
         if (keyList.includes(key)) {
             return JSON.parse(localStorage.getItem(`${prefix}-${key}`));
         }
@@ -84,7 +84,7 @@ export default function Storage(str) {
 
     this.removeAllItems = function() {
         keyList.forEach(key => localStorage.removeItem(`${prefix}-${key}`))
-        keyList = [];
+        while (keyList.length) keyList.pop();
         saveKeyList();
     }
 

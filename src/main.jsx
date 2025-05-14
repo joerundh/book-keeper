@@ -9,12 +9,10 @@ import './index.css'
 import App from './App.jsx'
 import Storage from './modules/Storage.mjs'
 
-/*
 const favBooks = new Storage("fav-books");
 const favAuthors = new Storage("fav-authors");
 const favCats = new Storage("fav-categories");
 const readingList = new Storage("reading-list");
-*/
 
 const StorageContext = createContext();
 
@@ -30,7 +28,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/search",
-        element: <SearchPage />
+        element: <SearchPage />,
       },
       {
         path: "*",
