@@ -19,9 +19,9 @@ export default function Search() {
     const { data, isLoading, error } = useQuery({
         queryKey: "bookSearch",
         queryFn: searchApi,
-        enabled: searchParams.size
+        enabled: !!searchParams.size
     });
     return (
-        ">"
+        <h1>Search</h1>
     )
 }

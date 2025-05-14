@@ -6,12 +6,14 @@ import Search from './pages/Search.jsx'
 import './index.css'
 import App from './App.jsx'
 import Storage from './modules/Storage.mjs'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+
+const queryClient = new QueryClient();
 
 const favBooks = new Storage("fav-books");
 const favAuthors = new Storage("fav-authors");
 const favCats = new Storage("fav-categories");
 const readingList = new Storage("reading-list");
-
 const StorageContext = createContext();
 
 const NotFound = () => {
@@ -42,7 +44,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/search",
-        element: <Search />,
+        element: <>
+          <QueryClientProvider client={queryClient}>
+            <Search />
+          </QueryClientProvider>
+        </>
       },
       {
         path: "*",
