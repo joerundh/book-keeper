@@ -18,7 +18,7 @@ export default function SelectionInput({ selection, options, setter }) {
                 {
                     options.filter(option => selection.includes(option))
                             .map((option, index) => (
-                                <button key={index} onClick={() => unselectOption(option)}>{option}</button>
+                                <button key={index} onClick={e => { e.preventDefault(); unselectOption(option); }}>{option}</button>
                             ))
                 }
             </div>
@@ -27,7 +27,7 @@ export default function SelectionInput({ selection, options, setter }) {
                 {
                     options.filter(option => !selection.includes(option))
                             .map((option, index) => (
-                                <button key={index} onClick={() => selectOption(option)}>{option}</button>
+                                <button key={index} onClick={e => { e.preventDefault(); selectOption(option); }}>{option}</button>
                             ))
                 }
             </div>

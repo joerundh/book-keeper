@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "react-router-dom";
 import SelectionInput from "../components/SelectionInput";
@@ -33,19 +33,46 @@ const categories = [
 ];
 
 export default function Search() {
-    const [ searchCategories, setSearchCategories ] = useState([]);
+    const [ search, setSearch ] = useState("");
+    const [ topic, setTopic ] = useState("");
+
+    const [ selectedCategories, setSelectedCategories ] = useState([]);
+    useEffect(() => {
+        setTopic(selectedCategories.map(category => category.toLowerCase()).join(","))
+    }, [ selectedCategories ])
 
     const [ searchParams ] = useSearchParams();
+
     const { data, isLoading, error } = useQuery({
-        queryKey: "bookSearch",
+        queryKey: [ "bookSearch" ],
         queryFn: searchApi,
         enabled: !!searchParams.size
     });
+
+    const resetSearchForm = () => {
+        setSearch("");
+        setSelectedCategories([]);
+    }
+
     return (
         <>
             <h1>Search</h1>
-            <h3>Categories:</h3>
-            <SelectionInput selection={searchCategories} options={categories} setter={setSearchCategories} />
+            <form method="GET">
+                <div>
+                    <h3>Search:</h3>
+                    <input type="text" name="search" value={search} onChange={e => setSearch(e.target.value)} />
+                </div>
+                <div>
+                    <h3>Categories:</h3>
+                    <input type="hidden" name="topic" value={topic} />
+                    <SelectionInput selection={selectedCategories} options={categories} setter={setSelectedCategories} />
+                </div>
+                <p></p>
+                <div>
+                    <button>Search</button>
+                    <button onClick={e => { e.preventDefault(); resetSearchForm(); }}>Reset</button>
+                </div>
+            </form>
         </>
     )
 }
