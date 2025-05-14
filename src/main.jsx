@@ -1,10 +1,8 @@
 import { createContext, StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import HomePage from './pages/HomePage.jsx'
-import SearchPage from './pages/SearchPage.jsx'
-import SearchResults from './pages/SearchResults.jsx'
-import ErrorPage from './pages/ErrorPage.jsx'
+import Home from './pages/Home.jsx'
+import Search from './pages/SearchForm.jsx'
 import './index.css'
 import App from './App.jsx'
 import Storage from './modules/Storage.mjs'
@@ -16,23 +14,39 @@ const readingList = new Storage("reading-list");
 
 const StorageContext = createContext();
 
+const NotFound = () => {
+  return (
+    <>
+      <h2>404 Not found</h2>
+    </>
+  )
+};
+
+const Error = () => {
+  return (
+    <>
+      <h2>An error occured.</h2>
+    </>
+  )
+};
+
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    errorElement: <ErrorPage />,
+    errorElement: <Error />,
     children: [
       {
         index: true,
-        element: <HomePage />
+        element: <Home />
       },
       {
         path: "/search",
-        element: <SearchPage />,
+        element: <Search />,
       },
       {
         path: "*",
-        element: <ErrorPage />
+        element: <NotFound />
       }
     ]
   }
