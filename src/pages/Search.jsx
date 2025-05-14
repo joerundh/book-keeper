@@ -72,7 +72,7 @@ export default function Search() {
     return (
         <>
             <h1>Search</h1>
-            <form method="GET" id="search-form">
+            <form method="GET" action="/results" id="search-form">
                 <div>
                     <h3>Search:</h3>
                     <input type="text" name="search" value={search} onChange={e => setSearch(e.target.value)} />
