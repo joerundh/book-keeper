@@ -5,10 +5,10 @@ export default function SearchResults() {
     return (
         <div>
             <p>
-                Title: { searchParams.get("title")}
+                Title: { searchParams.get("title") }
             </p>
             <p>
-                Author: {searchParams.get("author")}
+                Author: { searchParams.get("author") }
             </p>
         </div>
     )
