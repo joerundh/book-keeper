@@ -66,7 +66,7 @@ export default function Search() {
             <h3>Error</h3>
             <h4>{error.message}</h4>
         </>
-        return <SearchResults query={search} results={data.results} />
+        return <SearchResults query={searchParams.get("search")} results={data.results} />
     }
 
     return (
