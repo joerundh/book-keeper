@@ -17,17 +17,17 @@ export default function SelectionInput({ selection, options, setter }) {
             <div>
                 {
                     options.filter(option => selection.includes(option))
-                            .map(option => (
-                                <button onClick={() => unselectOption(option)}>{option}</button>
+                            .map((option, index) => (
+                                <button key={index} onClick={() => unselectOption(option)}>{option}</button>
                             ))
                 }
             </div>
             <p>Choose from:</p>
             <div>
                 {
-                    options.filter(option => !selected.includes(option))
-                            .map(option => (
-                                <button onClick={() => selectOption(option)}>{option}</button>
+                    options.filter(option => !selection.includes(option))
+                            .map((option, index) => (
+                                <button key={index} onClick={() => selectOption(option)}>{option}</button>
                             ))
                 }
             </div>
