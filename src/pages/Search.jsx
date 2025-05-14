@@ -2,18 +2,17 @@ import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "react-router-dom";
 import SelectionInput from "../components/SelectionInput";
+import SearchResults from "../components/SearchResults";
 
 const mapToParams = map => {
     const params = new URLSearchParams();
-    map.forEach((key, value) => params.append(key, value));
+    map.forEach((value, key) => params.append(key, value));
     return params;
 }
 
 async function searchApi(paramsMap) {
-    if (q) {
-        const res = await fetch(`https://gutendex.com/books?search=${mapToParams(paramsMap).toString()}}`);
-    }
-    return [];
+    const res = await fetch(`https://gutendex.com/books?${mapToParams(paramsMap).toString()}`);
+    return await res.json();
 }
 
 const categories = [
@@ -33,31 +32,47 @@ const categories = [
 ];
 
 export default function Search() {
-    const [ search, setSearch ] = useState("");
+    const [ searchParams ] = useSearchParams();
+
+    const [ search, setSearch ] = useState(searchParams.get("search") || "");
     const [ topic, setTopic ] = useState("");
 
     const [ selectedCategories, setSelectedCategories ] = useState([]);
     useEffect(() => {
         setTopic(selectedCategories.map(category => category.toLowerCase()).join(","))
-    }, [ selectedCategories ])
-
-    const [ searchParams ] = useSearchParams();
+    }, [ selectedCategories ]);
 
     const { data, isLoading, error } = useQuery({
         queryKey: [ "bookSearch" ],
-        queryFn: searchApi,
+        queryFn: () => searchApi(searchParams),
         enabled: !!searchParams.size
     });
+
+    const submitSearchForm = () => {
+        if (search || topic) {
+            document.querySelector("#search-form").submit();
+        }
+    }
 
     const resetSearchForm = () => {
         setSearch("");
         setSelectedCategories([]);
     }
 
+    const searchResults = () => {
+        if (!searchParams.size) return <></>
+        if (isLoading) return <h3>Searching...</h3>
+        if (error) return <>
+            <h3>Error</h3>
+            <h4>{error.message}</h4>
+        </>
+        return <SearchResults query={search} results={data.results} />
+    }
+
     return (
         <>
             <h1>Search</h1>
-            <form method="GET">
+            <form method="GET" id="search-form">
                 <div>
                     <h3>Search:</h3>
                     <input type="text" name="search" value={search} onChange={e => setSearch(e.target.value)} />
@@ -69,10 +84,13 @@ export default function Search() {
                 </div>
                 <p></p>
                 <div>
-                    <button>Search</button>
+                    <button onClick={e => { e.preventDefault(); submitSearchForm(); }}>Search</button>
                     <button onClick={e => { e.preventDefault(); resetSearchForm(); }}>Reset</button>
                 </div>
             </form>
+            {
+                searchResults()
+            }
         </>
     )
 }

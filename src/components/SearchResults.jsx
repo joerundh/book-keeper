@@ -1,15 +1,17 @@
-import { useSearchParams } from "react-router";
-
-export default function SearchResults() {
-    const { searchParams } = useSearchParams();
+export default function SearchResults({ query, results }) {
+    if (!results) return <></>;
+    if (!results.length) return (
+        <h4>No results found for "{query}"</h4>
+    )
     return (
-        <div>
-            <p>
-                Title: { searchParams.get("title") }
-            </p>
-            <p>
-                Author: { searchParams.get("author") }
-            </p>
-        </div>
+        <ul>
+            {
+                results.map((result, index) => (
+                    <li key={index} style={{ listStyleType: "none" }}>
+                        <h3>{result.title}</h3>
+                    </li>
+                ))
+            }
+        </ul>
     )
 }

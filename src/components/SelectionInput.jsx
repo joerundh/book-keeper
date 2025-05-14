@@ -13,16 +13,7 @@ export default function SelectionInput({ selection, options, setter }) {
 
     return (
         <div>
-            <p>Selected:</p>
-            <div>
-                {
-                    options.filter(option => selection.includes(option))
-                            .map((option, index) => (
-                                <button key={index} onClick={e => { e.preventDefault(); unselectOption(option); }}>{option}</button>
-                            ))
-                }
-            </div>
-            <p>Choose from:</p>
+            <p>Choose:</p>
             <div>
                 {
                     options.filter(option => !selection.includes(option))
@@ -31,6 +22,21 @@ export default function SelectionInput({ selection, options, setter }) {
                             ))
                 }
             </div>
+            <p>Selected:</p>
+            {
+                selection.length ? (
+                    <div>
+                        {
+                            options.filter(option => selection.includes(option))
+                                    .map((option, index) => (
+                                        <button key={index} onClick={e => { e.preventDefault(); unselectOption(option); }}>{option}</button>
+                                    ))
+                        }
+                    </div>
+                ) : (
+                    <p>None selected.</p>
+                )
+            }
         </div>
     )
 }
