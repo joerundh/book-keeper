@@ -7,10 +7,12 @@ function ResultsListItem({ result }) {
         display: "flex",
         flexDirection: "column",
         gap: 10,
-        gridArea: "info"
+        gridArea: "info",
+        padding: 10
     }
     const optionsCSS = {
-        gridArea: "options"
+        gridArea: "options",
+        padding: 10
     }
     return (
         <li className={styles.resultsListItem}>
@@ -18,7 +20,7 @@ function ResultsListItem({ result }) {
                 <CoverPhoto src={result.formats["image/jpeg"]} width={150} height={225} />
             </div>
             <div style={infoCSS}>
-                <h2>{result.title}</h2>
+                <h3>{result.title}</h3>
                 <h4>by {result.authors.map(obj => obj.name.split(", ").reverse().join(" ")).join(", ")}</h4>
             </div>
             <div style={optionsCSS}>
