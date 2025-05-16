@@ -14,9 +14,9 @@ const queryClient = new QueryClient();
 
 const favBooks = new Storage("fav-books");
 const favAuthors = new Storage("fav-authors");
-const favCats = new Storage("fav-categories");
-const readingList = new Storage("reading-list");
-const StorageContext = createContext();
+const favCategories = new Storage("fav-categories");
+
+export const StorageContext = createContext();
 
 const NotFound = () => {
   return (
@@ -75,7 +75,7 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <StorageContext.Provider value={{ favBooks: favBooks, favAuthors: favAuthors, favCats: favCats, readingList: readingList }}>
+    <StorageContext.Provider value={{ favBooks, favAuthors, favCategories }}>
       <RouterProvider router={router} />
     </StorageContext.Provider>
   </StrictMode>,

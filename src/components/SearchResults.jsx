@@ -1,11 +1,29 @@
 import styles from "../assets/SearchResults.module.css";
 import CoverPhoto from "./CoverPhoto";
-import LoadingIcon from "./LoadingIcon";
+import FavouriteButton from "./FavouriteButton";
 
 function ResultsListItem({ result }) {
+    const infoCSS = {
+        display: "flex",
+        flexDirection: "column",
+        gap: 10,
+        gridArea: "info"
+    }
+    const optionsCSS = {
+        gridArea: "options"
+    }
     return (
         <li className={styles.resultsListItem}>
-            <CoverPhoto src={result.formats["image/jpeg"]} width={150} height={225} />
+            <div style={{ gridArea: "cover" }}>
+                <CoverPhoto src={result.formats["image/jpeg"]} width={150} height={225} />
+            </div>
+            <div style={infoCSS}>
+                <h2>{result.title}</h2>
+                <h4>by {result.authors.map(obj => obj.name.split(", ").reverse().join(" ")).join(", ")}</h4>
+            </div>
+            <div style={optionsCSS}>
+                <FavouriteButton book={result} />
+            </div>
         </li>
     )
 }

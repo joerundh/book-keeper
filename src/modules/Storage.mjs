@@ -34,7 +34,7 @@ export default function Storage(str) {
 
     function removeKey(key) {
         if (keyList.includes(key)) {
-            keyList = keyList.filter(x => x !== key);
+            keyList.splice(keyList.indexOf(key), 1);
             saveKeyList();
             return true;
         }
@@ -49,15 +49,15 @@ export default function Storage(str) {
         let newKey;
         do {
             newKey = uuid();
-        } while (keyList.incluces(newKey));
+        } while (keyList.includes(newKey));
 
         const newItem = { key: newKey, value: value, timeAdded: Date.now() };
         const stringified = JSON.stringify(newItem) || "";
         if (stringified) {
-            localStorage.setItem(`$(prefix)-${newKey}`, stringified);
+            localStorage.setItem(`${prefix}-${newKey}`, stringified);
             keyList.push(newKey);
             saveKeyList();
-            return key;
+            return newKey;
         }
         return "";
     }
@@ -70,7 +70,10 @@ export default function Storage(str) {
     }
 
     this.getAllItems = function() {
-        return keyList.map(key => JSON.parse(localStorage.getIem(`${prefix}-${key}`)));
+        const items = keyList.map(key => {
+            return JSON.parse(localStorage.getItem(`${prefix}-${key}`));
+        });
+        return items;
     }
 
     this.removeItem = function(key) {
@@ -78,14 +81,31 @@ export default function Storage(str) {
             removeKey(key);
             saveKeyList();
             localStorage.removeItem(`${prefix}-${key}`);
+            return true;
         }
-        return true;
+        return false;
     }
 
     this.removeAllItems = function() {
         keyList.forEach(key => localStorage.removeItem(`${prefix}-${key}`))
         while (keyList.length) keyList.pop();
         saveKeyList();
+    }
+
+    /*
+    Search for and get keys of primitive values
+    */
+
+    this.hasValue = function(value) {
+        return this.getAllItems().map(obj => obj.value).includes(value);
+    }
+
+    this.getKeyFromValue = function(value) {
+        const item = this.getAllItems().filter(obj => obj.value === value)[0];
+        if (item) {
+            return item.key;
+        }
+        return "";
     }
 
     /*
