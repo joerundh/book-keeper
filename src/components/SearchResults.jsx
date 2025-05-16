@@ -1,18 +1,11 @@
-import styles from "./SearchResults.module.css";
+import styles from "../assets/SearchResults.module.css";
+import CoverPhoto from "./CoverPhoto";
+import LoadingIcon from "./LoadingIcon";
 
 function ResultsListItem({ result }) {
-    console.log(result)
     return (
         <li className={styles.resultsListItem}>
-            <div className="cover">
-                <img src={result.formats["image/jpeg"]} />
-            </div>
-            <div>
-
-            </div>
-            <div>
-
-            </div>
+            <CoverPhoto src={result.formats["image/jpeg"]} width={150} height={225} />
         </li>
     )
 }

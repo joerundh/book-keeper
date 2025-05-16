@@ -2,6 +2,8 @@ import { createContext, StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Home from './pages/Home.jsx'
+import List from './pages/List.jsx'
+import AdvancedSearch from './pages/AdvancedSearch.jsx'
 import Search from './pages/Search.jsx'
 import './index.css'
 import App from './App.jsx'
@@ -19,7 +21,7 @@ const StorageContext = createContext();
 const NotFound = () => {
   return (
     <>
-      <h2>404 Not found</h2>
+      <h3>404 Not found</h3>
     </>
   )
 };
@@ -27,7 +29,8 @@ const NotFound = () => {
 const Error = () => {
   return (
     <>
-      <h2>An error occured.</h2>
+      <h3>Oh no!</h3>
+      <h4>An error occured somwhere! Try something else.</h4>
     </>
   )
 };
@@ -43,10 +46,22 @@ const router = createBrowserRouter([
         element: <Home />
       },
       {
+        path: "/list",
+        element: <List />
+      },
+      {
         path: "/search",
         element: <>
           <QueryClientProvider client={queryClient}>
             <Search />
+          </QueryClientProvider>
+        </>
+      },
+      {
+        path: "/advanced",
+        element: <>
+          <QueryClientProvider client={queryClient}>
+            <AdvancedSearch />
           </QueryClientProvider>
         </>
       },

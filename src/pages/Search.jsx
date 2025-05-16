@@ -1,96 +1,38 @@
-import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useSearchParams } from "react-router-dom";
-import SelectionInput from "../components/SelectionInput";
+import { useNavigate, useSearchParams } from "react-router-dom"
 import SearchResults from "../components/SearchResults";
 
-const mapToParams = map => {
+const searchApi = async query => {
     const params = new URLSearchParams();
-    map.forEach((value, key) => params.append(key, value));
-    return params;
-}
-
-async function searchApi(paramsMap) {
-    const res = await fetch(`https://gutendex.com/books?${mapToParams(paramsMap).toString()}`);
+    params.set("search", query);
+    const res = await fetch(`https://gutendex.com/books?${params.toString()}`);
+    if (!res.ok) {
+        throw new Error("An error occurred.");
+    }
     return await res.json();
 }
 
-const categories = [
-    "Fiction",
-    "Mystery",
-    "Thriller",
-    "Romance",
-    "Fantasy",
-    "Morality",
-    "Society",
-    "Power",
-    "Justice",
-    "Adventure",
-    "Tragedy",
-    "War",
-    "Philosophy"
-];
-
 export default function Search() {
     const [ searchParams ] = useSearchParams();
+    const query = searchParams.get("q") || "";
 
-    const [ search, setSearch ] = useState(searchParams.get("search") || "");
-    const [ topic, setTopic ] = useState("");
-
-    const [ selectedCategories, setSelectedCategories ] = useState([]);
-    useEffect(() => {
-        setTopic(selectedCategories.map(category => category.toLowerCase()).join(","))
-    }, [ selectedCategories ]);
+    const navigate = useNavigate();
 
     const { data, isLoading, error } = useQuery({
-        queryKey: [ "bookSearch" ],
-        queryFn: () => searchApi(searchParams),
-        enabled: !!searchParams.size
+        queryKey: [ "search", query ],
+        queryFn: () => searchApi(query),
+        enabled: !!query
     });
-
-    const submitSearchForm = () => {
-        if (search || topic) {
-            document.querySelector("#search-form").submit();
-        }
+    if (!query) {
+        navigate("/advanced");
     }
-
-    const resetSearchForm = () => {
-        setSearch("");
-        setSelectedCategories([]);
+    if (isLoading) {
+        return <p>Searching...</p>
     }
-
-    const searchResults = () => {
-        if (!searchParams.size) return <></>
-        if (isLoading) return <h3>Searching...</h3>
-        if (error) return <>
-            <h3>Error</h3>
-            <h4>{error.message}</h4>
-        </>
-        return <SearchResults query={searchParams.get("search")} results={data.results} />
+    if (error) {
+        return <p>{error.message}</p>
     }
-
     return (
-        <>
-            <h1>Search</h1>
-            <form method="GET" action="/results" id="search-form">
-                <div>
-                    <h3>Search:</h3>
-                    <input type="text" name="search" value={search} onChange={e => setSearch(e.target.value)} />
-                </div>
-                <div>
-                    <h3>Categories:</h3>
-                    <input type="hidden" name="topic" value={topic} />
-                    <SelectionInput selection={selectedCategories} options={categories} setter={setSelectedCategories} />
-                </div>
-                <p></p>
-                <div>
-                    <button onClick={e => { e.preventDefault(); submitSearchForm(); }}>Search</button>
-                    <button onClick={e => { e.preventDefault(); resetSearchForm(); }}>Reset</button>
-                </div>
-            </form>
-            {
-                searchResults()
-            }
-        </>
+        <SearchResults query={query} results={data.results} />
     )
-}
+};

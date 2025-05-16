@@ -1,0 +1,54 @@
+header {
+    width: 600px;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #181818;
+}
+
+.navButton {
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border-radius: 0;
+    background-color: grey;
+    border: 2px solid grey;
+    mask-image: url("../assets/three-horizontal-lines-outline-icon.png");
+    mask-size: 28px 28px;
+    mask-position: center center;
+    mask-repeat: no-repeat;
+}
+
+nav {
+    position: fixed;
+    transform-origin: top center;
+    transform: scale(0);
+}
+
+.searchBar form {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.searchInput {
+    width: 200px;
+    height: 25px;
+    margin: 0;
+}
+
+.submitSearch {
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    mask-image: url("search-icon.png");
+    mask-size: 100% 100%;
+    mask-position: center;
+    mask-repeat: no-repeat;
+    background-color: grey;
+    padding: 0;
+}
