@@ -2,7 +2,7 @@ import { v4 as uuid } from "uuid";
 
 const toKebabCase = str => str.toLowerCase()
                                 .split(/\s+/)
-                                .flatMap(s => s.split("").filter(char => char.match(/[a-z0-9]"/)).join(""))
+                                .map(s => s.split("").filter(char => char.match(/[a-z0-9]"/)).join(""))
                                 .join("-");
 
 export default function Storage(str) {
