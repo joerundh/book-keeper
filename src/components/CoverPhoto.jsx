@@ -19,6 +19,8 @@ export default function CoverPhoto({ src, width, height }) {
         height: height,
         display: "grid",
         placeContent: "center",
+        border: "1px solid grey",
+        backgroundColor: "#303030"
     };
     const imageCSS = {
         width: width,
