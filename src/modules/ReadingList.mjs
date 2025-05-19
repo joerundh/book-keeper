@@ -1,7 +1,7 @@
 import toKebabCase from "./toKebabCase.mjs";
 
 export default function ReadingList(str) {
-    const kebabCase = toKebabCase(str);
+    const kebabCase = toKebabCase(str || "mp-app");
     const prefix = kebabCase.match(/[a-z]/g) ? kebabCase : "my-app";
 
     const list = JSON.parse(localStorage.getItem(`${prefix}-reading-list`) || "[]");

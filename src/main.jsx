@@ -1,20 +1,25 @@
 import { createContext, StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+
 import Home from './pages/Home.jsx'
 import List from './pages/List.jsx'
-import AdvancedSearch from './components/SearchForm.jsx'
 import Search from './pages/Search.jsx'
+
+import Storage from './modules/Storage.mjs'
+import ReadingList from './modules/ReadingList.mjs'
+
 import './index.css'
 import App from './App.jsx'
-import Storage from './modules/Storage.mjs'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 const queryClient = new QueryClient();
 
 const favBooks = new Storage("fav-books");
 const favAuthors = new Storage("fav-authors");
 const favCategories = new Storage("fav-categories");
+
+const readingList = new ReadingList();
 
 export const StorageContext = createContext();
 

@@ -5,7 +5,7 @@ export default function Storage(str) {
     const kebabCase = toKebabCase(str);
     const prefix = kebabCase.match(/[a-z]/g) ? kebabCase : "storage";
 
-    const list = JSON.parse(localStorage.getItem(`${prefix}-key-list`) || "[]");
+    const keyList = JSON.parse(localStorage.getItem(`${prefix}-key-list`) || "[]");
 
     /*
     Storage and retrieval of key list
