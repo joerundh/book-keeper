@@ -1,37 +1,27 @@
 import { v4 as uuid } from "uuid";
-
-const toKebabCase = str => str.toLowerCase()
-                                .split(/\s+/)
-                                .map(s => s.split("").filter(char => char.match(/[a-z0-9]"/)).join(""))
-                                .filter(s => !!s)
-                                .join("-");
+import toKebabCase from "./toKebabCase.mjs";
 
 export default function Storage(str) {
     const kebabCase = toKebabCase(str);
     const prefix = kebabCase.match(/[a-z]/g) ? kebabCase : "storage";
 
+    const list = JSON.parse(localStorage.getItem(`${prefix}-key-list`) || "[]");
+
     /*
     Storage and retrieval of key list
     */
 
-    function getKeyList() {
-        return JSON.parse(localStorage.getItem(`${prefix}-keylist`) || "[]");
-    }
-
     function saveKeyList() {
-        localStorage.setItem(`${prefix}-keylist`, JSON.stringify(keyList));
+        if (list) {
+            localStorage.setItem(`${prefix}-key-list`, JSON.stringify(keyList));
+        } else {
+            localStorage.removeItem(`${prefix}-key-list`)
+        }
     }
 
     /*
     Keys
     */
-
-    function addKey(key) {
-        if (keyList.incluces(key)) return false;
-        keyList.push(key);
-        saveKeyList();
-        return true;
-    }
 
     function removeKey(key) {
         if (keyList.includes(key)) {
@@ -108,10 +98,4 @@ export default function Storage(str) {
         }
         return "";
     }
-
-    /*
-    Init
-    */
-
-    const keyList = getKeyList();
 }
