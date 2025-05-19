@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styles from "../assets/SearchResults.module.css";
 import CoverPhoto from "./CoverPhoto";
 import FavouriteButton from "./FavouriteButton";
@@ -20,7 +21,9 @@ function ResultsListItem({ result }) {
                 <CoverPhoto src={result.formats["image/jpeg"]} width={150} height={225} />
             </div>
             <div style={infoCSS}>
-                <h3>{result.title}</h3>
+                <Link to={`/book/${result.id}`}>
+                    <h3>{result.title}</h3>
+                </Link>
                 <h4>by {result.authors.map(obj => obj.name.split(", ").reverse().join(" ")).join(", ")}</h4>
             </div>
             <div style={optionsCSS}>

@@ -1,10 +1,11 @@
 import { createContext, StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 import Home from './pages/Home.jsx'
 import List from './pages/List.jsx'
+import BookProfile from './pages/BookProfile'
 import Search from './pages/Search.jsx'
 
 import Storage from './modules/Storage.mjs'
@@ -53,6 +54,25 @@ const router = createBrowserRouter([
       {
         path: "/list",
         element: <List />
+      },
+      {
+        path: "/book",
+        element: <>
+          <p>Choose a book to view</p>
+        </>,
+        children: [
+          {
+            path: ":id",
+            element: <BookProfile />
+          },
+          {
+            path: "*",
+            element: <>
+              <h1>Error</h1>
+              <p>No book chosen.</p>
+            </>
+          }
+        ]
       },
       {
         path: "/search",
