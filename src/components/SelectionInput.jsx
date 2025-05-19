@@ -29,7 +29,7 @@ export default function SelectionInput({ selection, options, setter }) {
                         {
                             options.filter(option => selection.includes(option))
                                     .map((option, index) => (
-                                        <button key={index} onClick={e => { e.preventDefault(); unselectOption(option); }}>{option}</button>
+                                        <span key={index} onClick={e => { e.preventDefault(); unselectOption(option); }}>{option}</span>
                                     ))
                         }
                     </div>

@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Home from './pages/Home.jsx'
 import List from './pages/List.jsx'
-import AdvancedSearch from './pages/AdvancedSearch.jsx'
+import AdvancedSearch from './components/SearchForm.jsx'
 import Search from './pages/Search.jsx'
 import './index.css'
 import App from './App.jsx'
@@ -54,14 +54,6 @@ const router = createBrowserRouter([
         element: <>
           <QueryClientProvider client={queryClient}>
             <Search />
-          </QueryClientProvider>
-        </>
-      },
-      {
-        path: "/advanced",
-        element: <>
-          <QueryClientProvider client={queryClient}>
-            <AdvancedSearch />
           </QueryClientProvider>
         </>
       },

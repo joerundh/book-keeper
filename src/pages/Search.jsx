@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useSearchParams } from "react-router-dom"
+import SearchForm from "../components/SearchForm";
 import SearchResults from "../components/SearchResults";
 
 const searchApi = async query => {
@@ -16,15 +17,16 @@ export default function Search() {
     const [ searchParams ] = useSearchParams();
     const query = searchParams.get("q") || "";
 
-    const navigate = useNavigate();
-
     const { data, isLoading, error } = useQuery({
         queryKey: [ "search", query ],
         queryFn: () => searchApi(query),
         enabled: !!query
     });
+
     if (!query) {
-        navigate("/advanced");
+        return (
+            <SearchForm />
+        )
     }
     if (isLoading) {
         return <p>Searching...</p>
