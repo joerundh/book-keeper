@@ -12,7 +12,7 @@ export default function Storage(str) {
     }
 
     const saveList = () => {
-        if (list) {
+        if (list.length) {
             // Store the list in local storage if it contains any objects
             localStorage.setItem(`${prefix}-list`, JSON.stringify(list));
         } else {

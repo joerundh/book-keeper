@@ -33,6 +33,11 @@ body {
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+  text-align: center;
+}
+
+h2, h3, h4, h5, h6 {
+  text-align: center;
 }
 
 button {
@@ -65,4 +70,18 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+header {
+  width: 100%;
+}
+
+main {
+  width: 100%;
+  padding: 10px;
+  text-align: left;
+}
+
+footer {
+  width: 100%;
 }

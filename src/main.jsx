@@ -23,12 +23,29 @@ const favCategories = new Storage("fav-categories");
 
 const readingList = new ReadingList();
 
+const categories = [
+    "Fiction",
+    "Mystery",
+    "Thriller",
+    "Romance",
+    "Fantasy",
+    "Morality",
+    "Society",
+    "Power",
+    "Justice",
+    "Adventure",
+    "Tragedy",
+    "War",
+    "Philosophy"
+];
+
 export const StorageContext = createContext();
+export const CategoryContext = createContext();
 
 const NotFound = () => {
   return (
     <>
-      <h3>404 Not found</h3>
+      <h2>404 Not found</h2>
     </>
   )
 };
@@ -54,7 +71,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/list",
-        element: <List />
+        element: <>
+          <CategoryContext.Provider value={{ categories }}>
+            <List />
+          </CategoryContext.Provider>
+        </>
       },
       {
         path: "/book",
@@ -64,7 +85,9 @@ const router = createBrowserRouter([
             path: ":id",
             element: <>
                 <QueryClientProvider client={bookClient}>
-                  <Book />
+                  <CategoryContext.Provider value={{ categories }}>
+                    <Book />
+                  </CategoryContext.Provider>
                 </QueryClientProvider>
               </>
           },
@@ -81,7 +104,9 @@ const router = createBrowserRouter([
         path: "/search",
         element: <>
           <QueryClientProvider client={searchClient}>
-            <Search />
+            <CategoryContext.Provider value={{ categories }}>
+              <Search />
+            </CategoryContext.Provider>
           </QueryClientProvider>
         </>
       },

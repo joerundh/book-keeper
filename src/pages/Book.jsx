@@ -1,7 +1,6 @@
 import { useParams } from "react-router-dom";
-import CoverPhoto from "../components/CoverPhoto";
 import { useState, useContext } from "react";
-
+import BookProfile from "../components/BookProfile";
 import { StorageContext } from "../main";
 import { useQuery } from "@tanstack/react-query";
 import LoadingIcon from "../components/LoadingIcon";
@@ -15,19 +14,9 @@ const callApi = async id => {
     return await obj.results[0];
 }
 
-function createBookProfile(book) {
-    return (
-        <div>
-            <CoverPhoto src={book.formats["image/jpeg"]} width={200} />
-            
-        </div>
-    )
-}
-
 export default function Book() {
     const params = useParams();
 
-    const [ book, setBook ] = useState(null);
     const [ call, setCall ] = useState(false);
     const { favBooks, readingList } = useContext(StorageContext);
 
@@ -40,11 +29,11 @@ export default function Book() {
     if (!call) {
         const filteredFavList = favBooks.getList().map(obj => obj.value).filter(obj => obj.id === params.id);
         if (filteredFavList.length) {
-            return createBookProfile(filteredFavList[0]);
+            return BookProfile(filteredFavList[0]);
         } else {
             const filteredReadingList = readingList.getList().map(obj => obj.book).filter(obj => obj.id === params.id);
             if (filteredReadingList.length) {
-                return createBookProfile(filteredReadingList);
+                return BookProfile(filteredReadingList);
             } else {
                 setCall(true);
             }
@@ -77,5 +66,5 @@ export default function Book() {
         )
     }
 
-    return createBookProfile(data);
+    return BookProfile(data);
 }

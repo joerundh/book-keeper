@@ -1,0 +1,20 @@
+.bookProfile {
+    display: grid;
+    grid-template-areas:
+        "cover info"
+        "summary summary";
+    grid-template-columns: 200px auto;
+    grid-template-rows: 300px auto;
+    gap: 10px;
+}
+
+.info {
+    grid-area: "info";
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.summary {
+    grid-area: "summary";
+}

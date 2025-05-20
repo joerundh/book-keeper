@@ -1,21 +1,6 @@
 import { useEffect, useState } from "react";
 import SelectionInput from "./SelectionInput";
 
-const categories = [
-    "Fiction",
-    "Mystery",
-    "Thriller",
-    "Romance",
-    "Fantasy",
-    "Morality",
-    "Society",
-    "Power",
-    "Justice",
-    "Adventure",
-    "Tragedy",
-    "War",
-    "Philosophy"
-];
 
 export default function SearchForm() {
     const [ search, setSearch ] = useState("")
@@ -47,7 +32,11 @@ export default function SearchForm() {
                 </div>
                 <div>
                     <h3>Categories:</h3>
-                    <input type="hidden" name="topic" value={topic} />
+                    {
+                        topic ? (
+                            <input type="hidden" name="topic" value={topic} />
+                        ) : (<></>)
+                    }
                     <SelectionInput selection={selectedCategories} options={categories} setter={setSelectedCategories} />
                 </div>
                 <p></p>

@@ -3,7 +3,8 @@ import { StorageContext } from "../main";
 
 export default function FavouriteButton({ book }) {
     const { favBooks } = useContext(StorageContext);
-    const [ storageKey, setStorageKey ] = useState(favBooks.getKeyFromValue(book.id) || "");
+    const filteredFavList = favBooks.getList().filter(obj => obj.value.id === book.id);
+    const [ storageKey, setStorageKey ] = useState(filteredFavList.length ? filteredFavList[0].key : "");
 
     const buttonCSS = {
         display: "flex",
@@ -49,10 +50,10 @@ export default function FavouriteButton({ book }) {
 
     const handleClick = () => {
         if (storageKey) {
-            favBooks.removeItem(storageKey);
+            favBooks.removeValue(book);
             setStorageKey("");
         } else {
-            const key = favBooks.addItem(book.id);
+            const key = favBooks.addValue(book);
             setStorageKey(key);
         }
     }
