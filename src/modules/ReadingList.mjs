@@ -6,6 +6,10 @@ export default function ReadingList(str) {
 
     const list = JSON.parse(localStorage.getItem(`${prefix}-reading-list`) || "[]");
 
+    this.getList = () => {
+        return list;
+    }
+
     const saveList = () => {
         if (list) {
             // Store the list in local storage if it contains any objects
@@ -49,13 +53,5 @@ export default function ReadingList(str) {
             return true;
         }
         return false;
-    }
-
-    this.getAllBooks = function() {
-        return list;
-    }
-
-    this.getAllBooksByStatus = function(status) {
-        return list.filter(obj => obj.status === status);
     }
 }

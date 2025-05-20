@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 import Home from './pages/Home.jsx'
 import List from './pages/List.jsx'
-import BookProfile from './pages/BookProfile'
+import Book from './pages/Book.jsx'
 import Search from './pages/Search.jsx'
 
 import Storage from './modules/Storage.mjs'
@@ -14,7 +14,8 @@ import ReadingList from './modules/ReadingList.mjs'
 import './index.css'
 import App from './App.jsx'
 
-const queryClient = new QueryClient();
+const searchClient = new QueryClient();
+const bookClient = new QueryClient();
 
 const favBooks = new Storage("fav-books");
 const favAuthors = new Storage("fav-authors");
@@ -36,7 +37,7 @@ const Error = () => {
   return (
     <>
       <h3>Oh no!</h3>
-      <h4>An error occured somwhere! Try something else.</h4>
+      <h4>An error occured somewhere! Try something else.</h4>
     </>
   )
 };
@@ -57,19 +58,21 @@ const router = createBrowserRouter([
       },
       {
         path: "/book",
-        element: <>
-          <p>Choose a book to view</p>
-        </>,
+        element: <Outlet />,
         children: [
           {
             path: ":id",
-            element: <BookProfile />
+            element: <>
+                <QueryClientProvider client={bookClient}>
+                  <Book />
+                </QueryClientProvider>
+              </>
           },
           {
-            path: "*",
+            index: true,
             element: <>
-              <h1>Error</h1>
-              <p>No book chosen.</p>
+              <h2>No ID provided</h2>
+              <p>Browse the list or do a search.</p>
             </>
           }
         ]
@@ -77,7 +80,7 @@ const router = createBrowserRouter([
       {
         path: "/search",
         element: <>
-          <QueryClientProvider client={queryClient}>
+          <QueryClientProvider client={searchClient}>
             <Search />
           </QueryClientProvider>
         </>
@@ -92,7 +95,7 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <StorageContext.Provider value={{ favBooks, favAuthors, favCategories }}>
+    <StorageContext.Provider value={{ favBooks, favAuthors, favCategories, readingList }}>
       <RouterProvider router={router} />
     </StorageContext.Provider>
   </StrictMode>,

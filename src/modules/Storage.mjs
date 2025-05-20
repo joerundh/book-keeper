@@ -2,100 +2,66 @@ import { v4 as uuid } from "uuid";
 import toKebabCase from "./toKebabCase.mjs";
 
 export default function Storage(str) {
-    const kebabCase = toKebabCase(str);
-    const prefix = kebabCase.match(/[a-z]/g) ? kebabCase : "storage";
+    const kebabCase = toKebabCase(str || "mp-app");
+    const prefix = kebabCase.match(/[a-z]/g) ? kebabCase : "my-app";
 
-    const keyList = JSON.parse(localStorage.getItem(`${prefix}-key-list`) || "[]");
+    const list = JSON.parse(localStorage.getItem(`${prefix}-storage`) || "[]");
+    
+    this.getList = function() {
+        return list;
+    }
 
-    /*
-    Storage and retrieval of key list
-    */
-
-    function saveKeyList() {
+    const saveList = () => {
         if (list) {
-            localStorage.setItem(`${prefix}-key-list`, JSON.stringify(keyList));
+            // Store the list in local storage if it contains any objects
+            localStorage.setItem(`${prefix}-list`, JSON.stringify(list));
         } else {
-            localStorage.removeItem(`${prefix}-key-list`)
+            // The list is empty, so it may as well be removed from 
+            // the local storage
+            localStorage.removeItem(`${prefix}-list`)
         }
     }
-
-    /*
-    Keys
-    */
-
-    function removeKey(key) {
-        if (keyList.includes(key)) {
-            keyList.splice(keyList.indexOf(key), 1);
-            saveKeyList();
-            return true;
-        }
-        return false;
-    }
-
-    /*
-    Items
-    */
-
-    this.addItem = function(value) {
-        let newKey;
-        do {
-            newKey = uuid();
-        } while (keyList.includes(newKey));
-
-        const newItem = { key: newKey, value: value, timeAdded: Date.now() };
-        const stringified = JSON.stringify(newItem) || "";
-        if (stringified) {
-            localStorage.setItem(`${prefix}-${newKey}`, stringified);
-            keyList.push(newKey);
-            saveKeyList();
-            return newKey;
-        }
-        return "";
-    }
-
-    this.getItem = function(key) {
-        if (keyList.includes(key)) {
-            return JSON.parse(localStorage.getItem(`${prefix}-${key}`));
-        }
-        return null;
-    }
-
-    this.getAllItems = function() {
-        const items = keyList.map(key => {
-            return JSON.parse(localStorage.getItem(`${prefix}-${key}`));
-        });
-        return items;
-    }
-
-    this.removeItem = function(key) {
-        if (keyList.includes(key)) {
-            removeKey(key);
-            saveKeyList();
-            localStorage.removeItem(`${prefix}-${key}`);
-            return true;
-        }
-        return false;
-    }
-
-    this.removeAllItems = function() {
-        keyList.forEach(key => localStorage.removeItem(`${prefix}-${key}`))
-        while (keyList.length) keyList.pop();
-        saveKeyList();
-    }
-
-    /*
-    Search for and get keys of primitive values
-    */
 
     this.hasValue = function(value) {
-        return this.getAllItems().map(obj => obj.value).includes(value);
+        return list.map(obj => JSON.stringify(obj.value)).includes(JSON.stringify(value));
     }
 
-    this.getKeyFromValue = function(value) {
-        const item = this.getAllItems().filter(obj => obj.value === value)[0];
-        if (item) {
-            return item.key;
+    this.addValue = function(value) {
+        /*
+        If the passed object is already stored in the list, return false without 
+        adding a duplicate. Otherwise, create a wrapper object with a unique ID
+        and a timestamp, add it to the list, save the list to the local storage,
+        and return true.
+        */
+
+        // Return false without addition if the value is already stored
+        if (this.hasValue(value)) {
+            return false;
         }
-        return "";
+
+        // Create an object which contains the book object, a status code and a timestap
+        const obj = { key: uuid(), value: value, timeAdded: Date.now() };
+        list.push(obj);
+        saveList();
+        return true;
+    }
+
+    this.removeValue = function(value) {
+        /*
+        If a value is found in the list, take its index and use it to splice the value 
+        out of the list. Then save the list and return true. Otherwise, if the value is
+        not found, return false.
+        */
+
+        // Find the index of the value (-1 if it doesn't exist in the list)
+        const index = list.map(obj => JSON.stringify(obj.value)).indexOf(JSON.stringify(value));
+        if (index >= 0) {
+            // Remove from the list and save the updated list
+            list.splice(index, 1);
+            saveList();
+            return true;
+        }
+        // If not found, return false with no further action
+        return false;
     }
 }
