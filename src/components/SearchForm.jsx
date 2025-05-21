@@ -46,22 +46,27 @@ export default function SearchForm() {
         setSelectedLanguages([]);
     }
 
+    const searchFormCSS = {
+        display: "flex",
+        flexDirection: "column",
+        gap: 10
+    }
+
     return (
         <>
             <h3>Search</h3>
-            <div>
-                <input type="text" name="q" value={query} onChange={e => setQuery(e.target.value)} style={{ width: 400, padding: 2}} />
-            </div>
-            <Collapsible header="Categories" view={false}>
-                <SelectionInput options={categories} selection={selectedCategories} selectionSetter={setSelectedCategories} />
-            </Collapsible>
-            <Collapsible header="Languages" view={false}>
-                <SelectionInput options={languages} selection={selectedLanguages} selectionSetter={setSelectedLanguages} />
-            </Collapsible>
-            <p></p>
-            <div>
-                <button onClick={e => { e.preventDefault(); submitSearch(); }}>Search</button>
-                <button onClick={e => { e.preventDefault(); resetSearch(); }}>Reset</button>
+            <div style={{searchFormCSS}}>
+                <div>
+                    <input type="text" name="q" value={query} onChange={e => setQuery(e.target.value)} style={{ width: 400, padding: 2}} />
+                    <button onClick={e => { e.preventDefault(); submitSearch(); }}>Search</button>
+                    <button onClick={e => { e.preventDefault(); resetSearch(); }}>Reset</button>
+                </div>
+                <Collapsible header="Categories" view={false}>
+                    <SelectionInput options={categories} selection={selectedCategories} selectionSetter={setSelectedCategories} />
+                </Collapsible>
+                <Collapsible header="Languages" view={false}>
+                    <SelectionInput options={languages} selection={selectedLanguages} selectionSetter={setSelectedLanguages} />
+                </Collapsible>
             </div>
         </>
     )

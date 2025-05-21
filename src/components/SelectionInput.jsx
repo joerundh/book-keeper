@@ -6,14 +6,13 @@ export default function SelectionInput({ options, selection, selectionSetter }) 
         display: "flex",
         flexFlow: "wrap",
         rowGap: 5,
-        columnGap: 10
+        columnGap: 20
     };
 
-    const toggleCheckbox = key => {
+    const toggleCheckbox = (element, key) => {
         const newSelection = {};
         Object.assign(newSelection, selection);
         newSelection[key] = !newSelection[key];
-        console.log(newSelection);
         selectionSetter(newSelection);
     }
 
@@ -24,8 +23,8 @@ export default function SelectionInput({ options, selection, selectionSetter }) 
                 let label, key, checked;
                 if (typeof option === "object") {
                     label = option.value;
-                    key = options.key;
-                    checked = selection[option.key];
+                    key = option.key;
+                    checked = selection[key];
                 } else {
                     label = `${option}`;
                     key = option;
@@ -33,7 +32,7 @@ export default function SelectionInput({ options, selection, selectionSetter }) 
                 }
 
                 return (
-                    <label key={index} style={{ cursor: "pointer" }}><input type="checkbox" checked={checked} onChange={e => toggleCheckbox(key)} selectionkey={key} /> {label}</label>
+                    <label key={index} style={{ cursor: "pointer" }}><input type="checkbox" checked={checked} onChange={e => toggleCheckbox(e.target, key)} /> {label}</label>
                 );
             })
         }</div>
