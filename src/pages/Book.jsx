@@ -1,7 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useState, useContext } from "react";
 import BookProfile from "../components/BookProfile";
-import { StorageContext } from "../main";
 import { useQuery } from "@tanstack/react-query";
 import LoadingIcon from "../components/LoadingIcon";
 

@@ -1,46 +1,18 @@
-import { createContext, StrictMode } from 'react'
+import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 import Home from './pages/Home.jsx'
 import List from './pages/List.jsx'
 import Book from './pages/Book.jsx'
 import Search from './pages/Search.jsx'
 
-import Storage from './modules/Storage.mjs'
-import ReadingList from './modules/ReadingList.mjs'
-
 import './index.css'
 import App from './App.jsx'
 
-const searchClient = new QueryClient();
-const bookClient = new QueryClient();
-
-const favBooks = new Storage("fav-books");
-const favAuthors = new Storage("fav-authors");
-const favCategories = new Storage("fav-categories");
-
-const readingList = new ReadingList();
-
-const categories = [
-    "Fiction",
-    "Mystery",
-    "Thriller",
-    "Romance",
-    "Fantasy",
-    "Morality",
-    "Society",
-    "Power",
-    "Justice",
-    "Adventure",
-    "Tragedy",
-    "War",
-    "Philosophy"
-];
-
-export const StorageContext = createContext();
-export const CategoryContext = createContext();
+/*
+Standard error elements
+*/
 
 const NotFound = () => {
   return (
@@ -50,14 +22,27 @@ const NotFound = () => {
   )
 };
 
+const NoId = () => {
+  return (
+    <>
+      <h2>No ID provided</h2>
+      <p>Browse the list or do a search.</p>
+    </>
+  )
+}
+
 const Error = () => {
   return (
     <>
-      <h3>Oh no!</h3>
-      <h4>An error occured somewhere! Try something else.</h4>
+      <h2>Oh no!</h2>
+      <p>An error occured somewhere! Try something else.</p>
     </>
   )
 };
+
+/*
+Router
+*/
 
 const router = createBrowserRouter([
   {
@@ -71,11 +56,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/list",
-        element: <>
-          <CategoryContext.Provider value={{ categories }}>
-            <List />
-          </CategoryContext.Provider>
-        </>
+        element: <List />
       },
       {
         path: "/book",
@@ -84,31 +65,18 @@ const router = createBrowserRouter([
           {
             path: ":id",
             element: <>
-                <QueryClientProvider client={bookClient}>
-                  <CategoryContext.Provider value={{ categories }}>
-                    <Book />
-                  </CategoryContext.Provider>
-                </QueryClientProvider>
-              </>
+              <Book />
+            </>
           },
           {
             index: true,
-            element: <>
-              <h2>No ID provided</h2>
-              <p>Browse the list or do a search.</p>
-            </>
+            element: <NoId />
           }
         ]
       },
       {
         path: "/search",
-        element: <>
-          <QueryClientProvider client={searchClient}>
-            <CategoryContext.Provider value={{ categories }}>
-              <Search />
-            </CategoryContext.Provider>
-          </QueryClientProvider>
-        </>
+        element: <Search />
       },
       {
         path: "*",
@@ -120,8 +88,6 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <StorageContext.Provider value={{ favBooks, favAuthors, favCategories, readingList }}>
-      <RouterProvider router={router} />
-    </StorageContext.Provider>
+    <RouterProvider router={router} />
   </StrictMode>,
 )

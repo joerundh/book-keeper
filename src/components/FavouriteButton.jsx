@@ -1,8 +1,9 @@
 import { useContext, useState } from "react"
-import { StorageContext } from "../main";
+import { BookContext } from "../App";
 
 export default function FavouriteButton({ book }) {
-    const { favBooks } = useContext(StorageContext);
+    const { favBooks } = useContext(BookContext);
+
     const filteredFavList = favBooks.getList().filter(obj => obj.value.id === book.id);
     const [ storageKey, setStorageKey ] = useState(filteredFavList.length ? filteredFavList[0].key : "");
 

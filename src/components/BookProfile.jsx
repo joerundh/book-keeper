@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import CoverPhoto from "./CoverPhoto";
 import styles from "../assets/BookProfile.module.css";
+import { BookContext } from "../App";
 
 export default function BookProfile(book) {
     const authorNames = book.authors.map(author => author.name);
