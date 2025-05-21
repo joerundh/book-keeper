@@ -9,7 +9,7 @@ export default function Collapsible({ header, view, children }) {
 
     return (
         <div style={{ width: "100%" }}>
-            <p onClick={toggleViewing} style={{ cursor: "pointer" }}>{viewing ? "\u25B2" : "\u25BC"} <b>{header} ({viewing ? "Hide" : "Show"})</b></p>
+            <p onClick={toggleViewing} title={`${viewing ? "Hide" : "Show"} ${header}`} style={{ cursor: "pointer" }}>{viewing ? "\u25B2" : "\u25BC"} <b>{header} ({viewing ? "Hide" : "Show"})</b></p>
             { viewing ? (
                 <div>{children}</div>
             ) : (<></>)}

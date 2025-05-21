@@ -13,7 +13,7 @@
     display: grid;
     grid-template-areas: 
         "cover info"
-        "cover options";
+        "options options";
     grid-template-columns: 150px auto;
     grid-template-rows: 1fr auto;
     gap: 20px;

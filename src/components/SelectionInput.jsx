@@ -32,7 +32,7 @@ export default function SelectionInput({ options, selection, selectionSetter }) 
                 }
 
                 return (
-                    <label key={index} style={{ cursor: "pointer" }}><input type="checkbox" checked={checked} onChange={e => toggleCheckbox(e.target, key)} /> {label}</label>
+                    <label key={index} title={label} style={{ cursor: "pointer" }}><input type="checkbox" checked={checked} onChange={e => toggleCheckbox(e.target, key)} /> {label}</label>
                 );
             })
         }</div>

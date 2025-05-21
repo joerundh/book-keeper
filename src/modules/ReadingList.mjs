@@ -6,6 +6,17 @@ export default function ReadingList(str) {
 
     const list = JSON.parse(localStorage.getItem(`${prefix}-reading-list`) || "[]");
 
+    const getIndex = book => list.map(obj => JSON.stringify(obj.book)).indexOf(JSON.stringify(book));
+
+    const setStatus = (book, newStatus) => {
+        if (![0, 1, 2, 3].includes(newStatus)) {
+            return false;
+        }
+        const index = getIndex(book);
+        list[index].status = newStatus;
+        return true;
+    }
+
     this.getList = () => {
         return list;
     }
@@ -28,30 +39,36 @@ export default function ReadingList(str) {
         the provided object is added to the list, the list is saved, and true
         is returned.
         */
-        if (list.map(obj => obj.book.id).includes(book.id)) {
-            // Return false without addition if (presumably) the book object is already
-            // stored
-            return false;
+        if (getIndex(book) < 0) {
+            /*
+            Create an object which contains the book object, a status code and a timestap
+            */
+            const obj = { status: 0, book: book, timeAdded: Date.now() };
+            list.push(obj);
+            saveList();
         }
-        /*
-        Create an object which contains the book object, a status code and a timestap
-        */
-        const obj = { status: 0, book: book, timeAdded: Date.now() };
-        list.push(obj);
-        saveList();
+        // Return false without addition if (presumably) the book object is already
+        // stored
+        return false;
     }
 
-    this.removeBook = function(bookId) {
+    this.removeBook = function(book) {
         /*
         If a book with the give book ID is stored, it is removed from the list 
         using indexOf and splice (as list is a constant variable)
         */
-        const index = list.map(obj => obj.book.id).indexOf(bookId);
-        if (index >= 0) {
-            list.splice(index, 1);
-            saveList();
-            return true;
+        const index = getIndex(book);
+        if (index < 0) {
+            return false;
         }
-        return false;
+        list.splice(index, 1);
+        saveList();
+        return true;
     }
+
+    this.hasBook = function(book) {
+        return getIndex(book) >= 0;
+    }
+
+
 }

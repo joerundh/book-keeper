@@ -70,9 +70,9 @@ export default function SearchForm() {
             <Form onSubmit={e => handleSubmit(e)} className={styles.searchForm}>
                 <h3>Search</h3>
                 <div className={styles.textInputLine}>
-                    <input type="text" name="q" value={query} onChange={e => setQuery(e.target.value)} style={{ width: 300, padding: 5}} />
-                    <button>Search</button>
-                    <button onClick={e => { e.preventDefault(); resetSearchForm(); }}>Reset</button>
+                    <input type="text" name="q" title="Search query" value={query} onChange={e => setQuery(e.target.value)} style={{ width: 300, padding: 5}} />
+                    <button title="Submit search">Search</button>
+                    <button title="Reset search" onClick={e => { e.preventDefault(); resetSearchForm(); }}>Reset</button>
                 </div>
                 <Collapsible header="Categories" view={false}>
                     <SelectionInput options={categories} selection={categorySelection} selectionSetter={setCategorySelection} />
