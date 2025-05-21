@@ -3,14 +3,16 @@ import styles from "../assets/SearchResults.module.css";
 import CoverPhoto from "./CoverPhoto";
 import FavouriteButton from "./FavouriteButton";
 import ReadingListButton from "./ReadingListButton";
-
-const authorLink = (author, index) => {
-    return (
-        <Link to={`/search?q=${encodeURI(name)}`}>{name}</Link>
-    );
-}
+import InlineList from "./InlineList";
+import { BookContext } from "../App";
+import { useContext } from "react";
+import fetchCategories from "../modules/fetchCategories.mjs";
 
 function ResultsListItem({ result }) {
+    const { categories, languages } = useContext(BookContext);
+
+    const fetchedCategories = fetchCategories(categories, [ ...result.subjects, ...result.bookshelves ]);
+    
     const infoCSS = {
         display: "flex",
         flexDirection: "column",
@@ -33,28 +35,44 @@ function ResultsListItem({ result }) {
                     <h3>{result.title}</h3>
                 </Link>
                 <div>
-                    by <ul className={styles.inlineList}>{
-                        result.authors.map((author, index, arr) => {
-                            const name = author.name.split(",").map(part => part.trim()).reverse().join(" ")
-                            return (
-                                <li key={index}>
-                                    <Link to={`/search?q=${encodeURI(name)}`}>{name}</Link>
-                                </li>
-                            );
-                        })
-                    }</ul>
+                    by <InlineList separator={", "}>
+                        {
+                            result.authors.map((author, index) => {
+                                const name = author.name.split(",").map(part => part.trim()).reverse().join(" ");
+                                return (
+                                    <Link key={index} to={`/search?q=${encodeURI(name)}`} style={{ textWrap: "nowrap" }}>{name}</Link>
+                                )
+                            })
+                        }
+                    </InlineList>
                 </div>
                 <div>
                     <h4>Categories:</h4>
-                    <ul>{
-                        
-                    }</ul>
+                    {
+                        fetchedCategories.length ? (
+                            <InlineList separator={", "}>
+                                {
+                                    fetchedCategories.map((category, index) => (
+                                        <Link key={index} to={`/search?topic=${category.toLowerCase()}`}>{category}</Link>
+                                    ))
+                                }
+                            </InlineList>
+                        ) : (<p>(None given)</p>)
+                    }
                 </div>
                 <div>
                     <h4>Languages:</h4>
-                    <ul>{
-                        
-                    }</ul>
+                    {
+                        result.languages.length ? (
+                            <InlineList separator={", "}>
+                                {
+                                    result.languages.map((lang, index) => (
+                                        <Link key={index} to={`/search?languages=${lang}`}>{languages.filter(obj => obj.key === lang)[0].value}</Link>
+                                    ))
+                                }
+                            </InlineList>
+                        ) : (<p>(None given)</p>)
+                    }
                 </div>
             </div>
             <div style={optionsCSS}>
@@ -71,10 +89,13 @@ export default function SearchResults({ query, results }) {
         <h4>No results found for "{query}".</h4>
     )
     return (
-        <ul className={styles.resultsList}>
+        <>
+            <h2>Search results{query ? ` for "${query}"` : ""}</h2>
+            <ul className={styles.resultsList}>
             {
                 results.map((result, index) => <ResultsListItem key={index} result={result} />)
             }
         </ul>
+        </>
     )
 }

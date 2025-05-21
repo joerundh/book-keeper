@@ -3,6 +3,7 @@ import { useState, useContext } from "react";
 import BookProfile from "../components/BookProfile";
 import { useQuery } from "@tanstack/react-query";
 import LoadingIcon from "../components/LoadingIcon";
+import { BookContext } from "../App";
 
 const callApi = async id => {
     const res = await fetch(`https://gutendex.com/books?ids=${id}`);
@@ -17,7 +18,7 @@ export default function Book() {
     const params = useParams();
 
     const [ call, setCall ] = useState(false);
-    const { favBooks, readingList } = useContext(StorageContext);
+    const { favBooks, readingList } = useContext(BookContext);
 
     const { data, isLoading, error } = useQuery({
         queryKey: [ "book", params.id ],
@@ -41,7 +42,7 @@ export default function Book() {
             <>
                 <div>
                     <LoadingIcon width={20} height={20} />
-                    <p>Loading book profile</p>
+                    <p>Loading book profile...</p>
                 </div>
             </>
         )

@@ -27,10 +27,10 @@ export default function Search() {
         params.set("search", query);
     }
     if (categories) {
-        params.set("topics", categories);
+        params.set("topic", categories.map(str => str.toLowerCase()).join(","));
     }
     if (languages) {
-        params.set("languages", languages);
+        params.set("languages", languages.join(","));
     }
 
     const { data, isLoading, error } = useQuery({

@@ -1,4 +1,4 @@
-export default function checkCategories(search, categories) {
+export default function fetchCategories(search, categories) {
     /*
     search: given array of (arrys of) categories to search for
     categories: array of categories/topics from a book API object
@@ -22,6 +22,7 @@ export default function checkCategories(search, categories) {
             for (let str of val) {
                 if (searchForString(str)) {
                     results.push(val[0]);
+                    break;
                 }
             }
         } else {
@@ -30,4 +31,5 @@ export default function checkCategories(search, categories) {
             }
         }
     }
+    return results;
 }
