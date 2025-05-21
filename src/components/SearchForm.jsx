@@ -3,12 +3,14 @@ import SelectionInput from "./SelectionInput";
 import { BookContext } from "../App";
 import Collapsible from "./Collapsible";
 import styles from "../assets/SearchForm.module.css";
+import { Form, useNavigate } from "react-router-dom";
 
 const filterSelection = obj => {
     return Object.entries(obj).filter(([key, value]) => value ).map(([key, value]) => key);
 }
 
 export default function SearchForm() {
+    const navigate = useNavigate();
     /*
     Available categories and languages from context
     */
@@ -39,21 +41,21 @@ export default function SearchForm() {
 
     const handleSubmit = e => {
         e.preventDefault();
+        console.log(e.target)
         const selectedCategories = filterSelection(categorySelection);
         const selectedLanguages = filterSelection(languageSelection);
         if (query || selectedCategories.length || selectedLanguages.length) {
-            const formData = new FormData();
+            const params = new URLSearchParams();
             if (query) {
-                formData.append("q", query);
+                params.append("q", query);
             }
             if (selectedCategories.length) {
-                formData.append("categories", selectedCategories);
+                params.append("categories", selectedCategories.join(","));
             }
             if (selectedLanguages.length) {
-                formData.append("languages", selectedLanguages);
+                params.append("languages", selectedLanguages.join(","));
             }
-
-            
+            navigate(`/search?${params.toString()}`);
         }
     }
 
@@ -65,8 +67,8 @@ export default function SearchForm() {
 
     return (
         <>
-            <h3>Search</h3>
-            <form onSubmit={e => handleSubmit(e)} className={styles.searchForm}>
+            <Form onSubmit={e => handleSubmit(e)} className={styles.searchForm}>
+                <h3>Search</h3>
                 <div className={styles.textInputLine}>
                     <input type="text" name="q" value={query} onChange={e => setQuery(e.target.value)} style={{ width: 300, padding: 5}} />
                     <button>Search</button>
@@ -78,7 +80,7 @@ export default function SearchForm() {
                 <Collapsible header="Languages" view={false}>
                     <SelectionInput options={languages} selection={languageSelection} selectionSetter={setLanguageSelection} />
                 </Collapsible>
-            </form>
+            </Form>
         </>
     )
 }

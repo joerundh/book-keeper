@@ -33,7 +33,7 @@ export default function Search() {
         enabled: !!query || !!categories || !!languages
     });
 
-    if (!query) {
+    if (!query && !categories && !languages) {
         return (
             <SearchForm />
         )
