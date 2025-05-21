@@ -32,21 +32,29 @@ function ResultsListItem({ result }) {
                 <Link to={`/book/${result.id}`}>
                     <h3>{result.title}</h3>
                 </Link>
-                <h4>by {
-                    result.authors.map((author, index, arr) => {
-                        const name = author.name.split(",").map(part => part.trim()).reverse().join(" ")
-                        return (
-                            <>
-                                <Link key={index} to={`/search?q=${encodeURI(name)}`}>{name}</Link>{index === arr.length - 1 ? "" : ", "}
-                            </>
-                        );
-                    })
-                }</h4>
+                <div>
+                    by <ul className={styles.inlineList}>{
+                        result.authors.map((author, index, arr) => {
+                            const name = author.name.split(",").map(part => part.trim()).reverse().join(" ")
+                            return (
+                                <li key={index}>
+                                    <Link to={`/search?q=${encodeURI(name)}`}>{name}</Link>
+                                </li>
+                            );
+                        })
+                    }</ul>
+                </div>
                 <div>
                     <h4>Categories:</h4>
+                    <ul>{
+                        
+                    }</ul>
                 </div>
                 <div>
                     <h4>Languages:</h4>
+                    <ul>{
+                        
+                    }</ul>
                 </div>
             </div>
             <div style={optionsCSS}>

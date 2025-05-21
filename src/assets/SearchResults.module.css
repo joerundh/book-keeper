@@ -34,3 +34,18 @@
     text-align: left;
     font-weight: normal;
 }
+
+.inlineList {
+    display: inline;
+}
+
+.inlineList li {
+    display: inline;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.inlineList li:not(:last-child)::after {
+    content: ", ";
+}

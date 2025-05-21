@@ -1,8 +1,13 @@
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { BookContext } from "../App";
 
 export default function ReadingListButton({ book }) {
     const { readingList } = useContext(BookContext);
+
+    const [ isReading, setIsReading ] = useState(readingList.hasBook(book));
+    useEffect(() => {
+        readingList.removeBook(book);
+    }, [ isReading ]);
 
     const buttonCSS = {
         display: "flex",
@@ -24,14 +29,14 @@ export default function ReadingListButton({ book }) {
     };
 
     const iconStyle = () => {
-        if (readingList.hasBook(book)) {
+        if (isReading) {
             return addedIconCSS;
         } else {
             return removedIconCSS;
         }
     }
     const iconSrc = () => {
-        if (readingList.hasBook(book)) {
+        if (isReading) {
             return "./src/assets/book-filled-icon.png";
         } else {
             return "./src/assets/book-outline-icon.png";
@@ -39,7 +44,7 @@ export default function ReadingListButton({ book }) {
     }
 
     const label = () => {
-        if (readingList.hasBook(book)) {
+        if (isReading) {
             return "Remove from Reading List";
         } else {
             return "Add to Reading List";
@@ -47,11 +52,7 @@ export default function ReadingListButton({ book }) {
     }
 
     const handleClick = () => {
-        if (readingList.hasBook(book)) {
-            readingList.removeBook(book);
-        } else {
-            readingList.addBook(book);
-        }
+        setIsReading(!isReading);
     }
 
     return (
