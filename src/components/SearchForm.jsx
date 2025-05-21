@@ -2,6 +2,11 @@ import { useContext, useEffect, useState } from "react";
 import SelectionInput from "./SelectionInput";
 import { BookContext } from "../App";
 import Collapsible from "./Collapsible";
+import styles from "../assets/SearchForm.module.css";
+
+const filterSelection = obj => {
+    return Object.entries(obj).filter(([key, value]) => value ).map(([key, value]) => key);
+}
 
 export default function SearchForm() {
     /*
@@ -20,54 +25,60 @@ export default function SearchForm() {
     categories.forEach(category => {
         initialCategorySelection[category] = false;
     });
-    const [ selectedCategories, setSelectedCategories ] = useState(initialCategorySelection);
-    const [ showCategories, setShowCategories ] = useState(false);
+    const [ categorySelection, setCategorySelection ] = useState(initialCategorySelection);
 
     const initialLanguageSelection = {}
     languages.forEach(language => {
         initialLanguageSelection[language.key] = false;
     })
-    const [ selectedLanguages, setSelectedLanguages ] = useState(initialLanguageSelection);
-    const [ showLanguages, setShowLanguages ] = useState(false);
+    const [ languageSelection, setLanguageSelection ] = useState(initialLanguageSelection);
 
     /*
     Button click event handlers
     */
 
-    const submitSearchForm = () => {
-        if (search || selectedCategories.length || selectedLanguages.length) {
+    const handleSubmit = e => {
+        e.preventDefault();
+        const selectedCategories = filterSelection(categorySelection);
+        const selectedLanguages = filterSelection(languageSelection);
+        if (query || selectedCategories.length || selectedLanguages.length) {
+            const formData = new FormData();
+            if (query) {
+                formData.append("q", query);
+            }
+            if (selectedCategories.length) {
+                formData.append("categories", selectedCategories);
+            }
+            if (selectedLanguages.length) {
+                formData.append("languages", selectedLanguages);
+            }
+
             
         }
     }
 
     const resetSearchForm = () => {
         setQuery("");
-        setSelectedCategories([])
-        setSelectedLanguages([]);
-    }
-
-    const searchFormCSS = {
-        display: "flex",
-        flexDirection: "column",
-        gap: 10
+        setCategorySelection([])
+        setLanguageSelection([]);
     }
 
     return (
         <>
             <h3>Search</h3>
-            <div style={{searchFormCSS}}>
-                <div>
-                    <input type="text" name="q" value={query} onChange={e => setQuery(e.target.value)} style={{ width: 400, padding: 2}} />
-                    <button onClick={e => { e.preventDefault(); submitSearch(); }}>Search</button>
-                    <button onClick={e => { e.preventDefault(); resetSearch(); }}>Reset</button>
+            <form onSubmit={e => handleSubmit(e)} className={styles.searchForm}>
+                <div className={styles.textInputLine}>
+                    <input type="text" name="q" value={query} onChange={e => setQuery(e.target.value)} style={{ width: 300, padding: 5}} />
+                    <button>Search</button>
+                    <button onClick={e => { e.preventDefault(); resetSearchForm(); }}>Reset</button>
                 </div>
                 <Collapsible header="Categories" view={false}>
-                    <SelectionInput options={categories} selection={selectedCategories} selectionSetter={setSelectedCategories} />
+                    <SelectionInput options={categories} selection={categorySelection} selectionSetter={setCategorySelection} />
                 </Collapsible>
                 <Collapsible header="Languages" view={false}>
-                    <SelectionInput options={languages} selection={selectedLanguages} selectionSetter={setSelectedLanguages} />
+                    <SelectionInput options={languages} selection={languageSelection} selectionSetter={setLanguageSelection} />
                 </Collapsible>
-            </div>
+            </form>
         </>
     )
 }
