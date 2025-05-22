@@ -25,6 +25,7 @@ export default function BookListItem({ book }) {
         gridTemplateColumns: "1fr 1fr",
         gap: 10
     };
+    
     return (
         <li className={styles.resultsListItem}>
             <div style={{ gridArea: "cover" }}>
