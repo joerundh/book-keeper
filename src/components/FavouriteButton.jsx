@@ -60,7 +60,7 @@ export default function FavouriteButton({ book }) {
     }
 
     return (
-        <button style={buttonCSS} onClick={() => handleClick()}>
+        <button style={buttonCSS} onClick={() => handleClick()} title={storageKey ? "Remove from Favourites" : "Add to Favourites"}>
             <img style={iconStyle()} src={iconSrc()} />
             <span>{label()}</span>
         </button>

@@ -31,7 +31,7 @@ export default function CoverPhoto({ src, width, height }) {
         <div style={containerCSS}>
             {
                 loaded ? (
-                    <img src={img.src} style={imageCSS} />
+                    <img src={img.src} style={imageCSS} alt="Cover photo" title="Cover photo" />
                 ) : (
                     error ? (
                         <span>No cover</span>

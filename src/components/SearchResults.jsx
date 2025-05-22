@@ -61,18 +61,6 @@ function ResultsListItem({ result }) {
                     }
                 </div>
                 <div>
-                    <h4>Languages:</h4>
-                    {
-                        result.languages.length ? (
-                            <InlineList separator={", "}>
-                                {
-                                    result.languages.map((lang, index) => (
-                                        <Link key={index} to={`/search?languages=${lang}`}>{languages.filter(obj => obj.key === lang)[0].value}</Link>
-                                    ))
-                                }
-                            </InlineList>
-                        ) : (<p>(None given)</p>)
-                    }
                 </div>
             </div>
             <div style={optionsCSS}>
@@ -86,16 +74,15 @@ function ResultsListItem({ result }) {
 export default function SearchResults({ query, results }) {
     if (!results) return <></>;
     if (!results.length) return (
-        <h4>No results found for "{query}".</h4>
+        <h4>No results found{ query ? ` for "${query}"` : "" }.</h4>
     )
     return (
         <>
-            <h2>Search results{query ? ` for "${query}"` : ""}</h2>
             <ul className={styles.resultsList}>
             {
                 results.map((result, index) => <ResultsListItem key={index} result={result} />)
             }
-        </ul>
+            </ul>
         </>
     )
 }
