@@ -36,7 +36,7 @@ export default function BookProfile({ book }) {
                             <InlineList separator={", "}>
                                 {
                                     fetchedCategories.map((category, index) => (
-                                        <Link key={index} to={`/search?topic=${category.toLowerCase()}`}>{category}</Link>
+                                        <Link key={index} to={`/category/${category.toLowerCase()}`}>{category}</Link>
                                     ))
                                 }
                             </InlineList>
@@ -50,7 +50,7 @@ export default function BookProfile({ book }) {
                             <InlineList separator={", "}>
                                 {
                                     book.languages.map((lang, index) => (
-                                        <Link key={index} to={`/search?languages=${lang}`}>{languages[lang]}</Link>
+                                        <Link key={index} to={`/language/${lang}`}>{languages[lang]}</Link>
                                     ))
                                 }
                             </InlineList>

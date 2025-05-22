@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-export default function Paginator({ params, resultsCount }) {
+export default function Paginator({ route, params, resultsCount }) {
     const searchParams = [...params].reduce((acc, [key, value]) => { acc[key] = value; return acc; }, {});
 
     const currentPage = Number.parseInt(searchParams.page) || 1;
@@ -25,7 +25,7 @@ export default function Paginator({ params, resultsCount }) {
     }
 
     const getSearchLink = pageNumber => {
-        return <Link to={`/search?${getSearchParams(pageNumber).toString()}`}>{pageNumber}</Link>
+        return <Link to={`${route}?${getSearchParams(pageNumber).toString()}`}>{pageNumber}</Link>
     }
     
     const paginatorCSS = {
@@ -42,8 +42,8 @@ export default function Paginator({ params, resultsCount }) {
             <p>Results pages:</p>
             {
                 currentPage > 1 ? [
-                    <Link key={0} to={`/search?${getSearchParams(1).toString()}`}>First</Link>,
-                    <Link key={1} to={`/search?${getSearchParams(currentPage - 1).toString()}`}>Prev</Link>
+                    <Link key={0} to={`${route}?${getSearchParams(1).toString()}`}>First</Link>,
+                    <Link key={1} to={`${route}?${getSearchParams(currentPage - 1).toString()}`}>Prev</Link>
                 ] : []
             }
             {
@@ -51,13 +51,13 @@ export default function Paginator({ params, resultsCount }) {
             }
             {
                 new Array(4).fill(0).map((x, index) => currentPage - 4 + index).filter(x => x > 0).map((page, index) => (
-                    <Link key={index} to={`/search?${getSearchParams(page)}`}>{page}</Link>
+                    <Link key={index} to={`${route}?${getSearchParams(page)}`}>{page}</Link>
                 ))
             }
             <p>{currentPage}</p>
             {
                 new Array(4).fill(0).map((x, index) => currentPage + index + 1).filter(x => x <= pageCount).map((page, index) => (
-                    <Link key={index} to={`/search?${getSearchParams(page)}`}>{page}</Link>
+                    <Link key={index} to={`${route}?${getSearchParams(page)}`}>{page}</Link>
                 ))
             }
             {
@@ -65,8 +65,8 @@ export default function Paginator({ params, resultsCount }) {
             }
             {
                 currentPage < pageCount ? [
-                    <Link key={0} to={`/search?${getSearchParams(currentPage + 1).toString()}`}>Next</Link>,
-                    <Link key={1} to={`/search?${getSearchParams(pageCount).toString()}`}>Last</Link>
+                    <Link key={0} to={`${route}?${getSearchParams(currentPage + 1).toString()}`}>Next</Link>,
+                    <Link key={1} to={`${route}?${getSearchParams(pageCount).toString()}`}>Last</Link>
                 ] : []
             }
         </div>

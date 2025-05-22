@@ -4,7 +4,7 @@ export default function LoadingIcon({ width }) {
         height: width,
         borderRadius: width/2,
         backgroundColor: "grey",
-        maskImage: "url('./src/assets/loader-icon.png')",
+        maskImage: `url("${location.origin}/src/assets/loader-icon.png")`,
         maskRepeat: "no-repeat",
         maskSize: "100% 100%",
         animation: "rotate 1500ms linear infinite"

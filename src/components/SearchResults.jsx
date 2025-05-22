@@ -53,7 +53,7 @@ function ResultsListItem({ result }) {
                             <InlineList separator={", "}>
                                 {
                                     fetchedCategories.map((category, index) => (
-                                        <Link key={index} to={`/search?topic=${category.toLowerCase()}`}>{category}</Link>
+                                        <Link key={index} to={`/category/${category.toLowerCase()}`}>{category}</Link>
                                     ))
                                 }
                             </InlineList>
@@ -67,7 +67,7 @@ function ResultsListItem({ result }) {
                             <InlineList separator={", "}>
                                 {
                                     result.languages.map((lang, index) => (
-                                        <Link key={index} to={`/search?languages=${lang}`}>{languages[lang]}</Link>
+                                        <Link key={index} to={`/language/${lang}`}>{languages[lang]}</Link>
                                     ))
                                 }
                             </InlineList>

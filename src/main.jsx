@@ -4,6 +4,8 @@ import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom'
 
 import Home from './pages/Home.jsx'
 import List from './pages/List.jsx'
+import Categories from './pages/Categories.jsx'
+import Languages from './pages/Languages.jsx'
 import Book from './pages/Book.jsx'
 import Search from './pages/Search.jsx'
 
@@ -22,14 +24,12 @@ const NotFound = () => {
   )
 };
 
-const NoId = () => {
-  return (
-    <>
-      <h2>No ID provided</h2>
-      <p>Browse the list or do a search.</p>
-    </>
-  )
-}
+const NoId = () => (
+  <>
+    <h2>No ID provided</h2>
+    <p>Browse the list or do a search.</p>
+  </>
+)
 
 const Error = () => {
   return (
@@ -55,8 +55,40 @@ const router = createBrowserRouter([
         element: <Home />
       },
       {
-        path: "/list",
-        element: <List />
+        path: "/categories",
+        element: <Categories />,
+      },
+      {
+        path: "/category",
+        element: <Outlet />,
+        children: [
+          {
+            path: ":category",
+            element: <Categories />
+          },
+          {
+            index: true,
+            element: <Categories />
+          }
+        ]
+      },
+      {
+        path: "/languages",
+        element: <Languages />
+      },
+      {
+        path: "language",
+        element: <Outlet />,
+        children: [
+          {
+            path: ":language",
+            element: <Languages />
+          },
+          {
+            index: true,
+            element: <Languages />
+          }
+        ]
       },
       {
         path: "/book",
@@ -64,9 +96,7 @@ const router = createBrowserRouter([
         children: [
           {
             path: ":id",
-            element: <>
-              <Book />
-            </>
+            element: <Book />
           },
           {
             index: true,

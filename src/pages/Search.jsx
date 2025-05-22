@@ -56,13 +56,21 @@ export default function Search() {
         )
     }
     if (isLoading) {
-        return <div style={loadingCSS}>
-            <LoadingIcon width={20} height={20} />
-            <p>Searching...</p>
-        </div>
+        return (
+            <>
+                <h2>Search results{query ? ` for "${query}"` : ""}</h2>
+                <div style={loadingCSS}>
+                    <LoadingIcon width={20} height={20} />
+                    <p>Searching...</p>
+                </div>
+            </>
+        )
     }
     if (error) {
-        return <p>{error.message}</p>
+        return <>
+            <h2>Error</h2>
+            <p>{error.message}</p>
+        </>
     }
 
     const resultsPerPage = 32;
@@ -74,9 +82,9 @@ export default function Search() {
         <>
             <h2>Search results{query ? ` for "${query}"` : ""}</h2>
             <h4>Showing results {firstResult} - {lastResult} out of {data.count}</h4>
-            <Paginator params={searchParams} resultsCount={data.count} />
+            <Paginator route="/search" params={searchParams} resultsCount={data.count} />
             <SearchResults query={query} results={data.results} />
-            <Paginator params={searchParams} resultsCount={data.count} />
+            <Paginator route="/search" params={searchParams} resultsCount={data.count} />
         </>
     )
 };
