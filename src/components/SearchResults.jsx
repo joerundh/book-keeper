@@ -40,7 +40,7 @@ function ResultsListItem({ result }) {
                             result.authors.map((author, index) => {
                                 const name = author.name.split(",").map(part => part.trim()).reverse().join(" ");
                                 return (
-                                    <Link key={index} to={`/search?q=${encodeURI(name)}`} style={{ textWrap: "nowrap" }}>{name}</Link>
+                                    <Link key={index} to={`/search?${new URLSearchParams([[ "q", name ]]).toString()}`} style={{ textWrap: "nowrap" }}>{name}</Link>
                                 )
                             })
                         }

@@ -9,21 +9,8 @@ import FavouriteButton from "./FavouriteButton";
 import ReadingListButton from "./ReadingListButton";
 
 export default function BookProfile({ book }) {
-    const { categories, languages } = useContext(BookContext);
+    const { categories, languages, formats } = useContext(BookContext);
     const fetchedCategories = fetchCategories(categories, [ ...book.subjects, ...book.bookshelves ]);
-
-    const formats = {
-        "text/html": "HTML",
-        "text/html; charset=utf-8": "HTML (UTF-8)",
-        "text/html; charset=us-ascii": "HTML (US ASCII)",
-        "application/epub+zip": "EPUB",
-        "application/x-mobipocket-ebook": "Mobipocket",
-        "text/plain; charset=us-ascii": "Plain text (US ASCII)",
-        "text/plain; charset=utf-8": "Plain text (UTF-8)",
-        "text/plain; charset=iso-8859-1": "Plain text (ISO/IEC 8859-1)",
-        "application/rdf+xml": "RDF/XML",
-        "application/octet-stream": "Octet stream"
-    }
 
     return (
         <div className={styles.bookProfile}>
@@ -36,7 +23,7 @@ export default function BookProfile({ book }) {
                             book.authors.map((author, index) => {
                                 const name = author.name.split(",").map(part => part.trim()).reverse().join(" ");
                                 return (
-                                    <Link key={index} to={`/search?q=${encodeURI(name)}`} title="Search for author" style={{ textWrap: "nowrap" }}>{name}</Link>
+                                    <Link key={index} to={`/search?${new URLSearchParams([[ "q", name ]]).toString()}`} title="Search for author" style={{ textWrap: "nowrap" }}>{name}</Link>
                                 )
                             })
                         }
