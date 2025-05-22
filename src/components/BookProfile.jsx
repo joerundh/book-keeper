@@ -50,7 +50,7 @@ export default function BookProfile({ book }) {
                             <InlineList separator={", "}>
                                 {
                                     book.languages.map((lang, index) => (
-                                        <Link key={index} to={`/search?languages=${lang.toLowerCase()}`}>{languages[lang]}</Link>
+                                        <Link key={index} to={`/search?languages=${lang}`}>{languages[lang]}</Link>
                                     ))
                                 }
                             </InlineList>
