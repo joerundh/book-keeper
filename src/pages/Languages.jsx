@@ -5,7 +5,6 @@ import { BookContext } from "../App";
 import { useContext } from "react";
 import SearchResults from "../components/SearchResults";
 import Paginator from "../components/Paginator";
-import toCapitalized from "../modules/toCapitalized.mjs";
 import LoadingIcon from "../components/LoadingIcon";
 
 const languageSearchApi = async language => {
