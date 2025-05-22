@@ -35,9 +35,9 @@ export default function FavouriteButton({ book }) {
     }
     const iconSrc = () => {
         if (storageKey) {
-            return "./src/assets/star-icon.png";
+            return `${location.origin}/src/assets/star-icon.png`;
         } else {
-            return "./src/assets/star-empty-icon.png";
+            return `${location.origin}/src/assets/star-empty-icon.png`;
         }
     }
 

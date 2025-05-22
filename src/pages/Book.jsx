@@ -8,7 +8,7 @@ import { BookContext } from "../App";
 const callApi = async id => {
     const res = await fetch(`https://gutendex.com/books?ids=${id}`);
     if (!res.ok) {
-        throw new Error("An error occurred.")
+        throw new Error("Could not fetch data.")
     }
     const obj = await res.json();
     return await obj.results[0];
@@ -26,35 +26,36 @@ export default function Book() {
         enabled: call
     })
 
+    const loadingScreen = () => (
+        <>
+            <div>
+                <LoadingIcon width={20} height={20} />
+                <p>Loading book profile...</p>
+            </div>
+        </>
+    );
+
     if (!call) {
         const filteredFavList = favBooks.getList().map(obj => obj.value).filter(obj => obj.id === params.id);
         if (filteredFavList.length) {
-            return BookProfile(filteredFavList[0]);
+            return (
+                <BookProfile book={filteredFavList[0]} />
+            );
         } else {
             const filteredReadingList = readingList.getList().map(obj => obj.book).filter(obj => obj.id === params.id);
             if (filteredReadingList.length) {
-                return BookProfile(filteredReadingList);
+                return (
+                    <BookProfile book={filteredReadingList[0]} />
+                );
             } else {
                 setCall(true);
             }
         }
-        return (
-            <>
-                <div>
-                    <LoadingIcon width={20} height={20} />
-                    <p>Loading book profile...</p>
-                </div>
-            </>
-        )
+        return loadingScreen();
     }
 
     if (isLoading) {
-        return (
-            <>
-                <LoadingIcon width={20} height={20} />
-                <p>Loading book profile...</p>
-            </>
-        )
+        return loadingScreen();
     }
 
     if (error) {
@@ -66,5 +67,7 @@ export default function Book() {
         )
     }
 
-    return BookProfile(data);
+    return (
+        <BookProfile book={data} />
+    );
 }

@@ -37,9 +37,9 @@ export default function ReadingListButton({ book }) {
     }
     const iconSrc = () => {
         if (isReading) {
-            return "./src/assets/book-filled-icon.png";
+            return `${location.origin}/src/assets/book-filled-icon.png`;
         } else {
-            return "./src/assets/book-outline-icon.png";
+            return `${location.origin}/src/assets/book-outline-icon.png`;
         }
     }
 

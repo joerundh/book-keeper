@@ -46,10 +46,10 @@ function ResultsListItem({ result }) {
                         }
                     </InlineList>
                 </div>
-                <div>
-                    <h4>Categories:</h4>
-                    {
-                        fetchedCategories.length ? (
+                {
+                    fetchedCategories.length ? (
+                        <div>
+                            <h4>Categories:</h4>
                             <InlineList separator={", "}>
                                 {
                                     fetchedCategories.map((category, index) => (
@@ -57,10 +57,18 @@ function ResultsListItem({ result }) {
                                     ))
                                 }
                             </InlineList>
-                        ) : (<p>(None given)</p>)
-                    }
-                </div>
+                        </div>
+                    ) : (<></>)
+                }
                 <div>
+                    <h4>Languages:</h4>
+                    <InlineList separator={", "}>
+                        {
+                            result.languages.map((lang, index) => (
+                                <Link key={index} to={`/search?languages=${lang.toLowerCase()}`}>{languages.filter(arr => arr.key === lang)[0].value}</Link>
+                            ))
+                        }
+                    </InlineList>
                 </div>
             </div>
             <div style={optionsCSS}>

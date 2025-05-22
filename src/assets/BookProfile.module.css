@@ -2,19 +2,34 @@
     display: grid;
     grid-template-areas:
         "cover info"
-        "summary summary";
+        "options options"
+        "summary summary"
+        "formats formats";
     grid-template-columns: 200px auto;
-    grid-template-rows: 300px auto;
     gap: 10px;
 }
 
 .info {
-    grid-area: "info";
+    width: 100%;
+    grid-area: info;
     display: flex;
     flex-direction: column;
+    align-items: start;
+    gap: 10px;
+}
+
+.options {
+    grid-area: options;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 10px;
 }
 
 .summary {
-    grid-area: "summary";
+    grid-area: summary;
+}
+
+.formats {
+    grid-area: formats;
+    text-align: left;
 }

@@ -51,13 +51,13 @@ export default function Paginator({ params, resultsCount }) {
             }
             {
                 new Array(4).fill(0).map((x, index) => currentPage - 4 + index).filter(x => x > 0).map((page, index) => (
-                    <Link key={2 + index} to={`/search?${getSearchParams(page)}`}>{page}</Link>
+                    <Link key={index} to={`/search?${getSearchParams(page)}`}>{page}</Link>
                 ))
             }
             <p>{currentPage}</p>
             {
                 new Array(4).fill(0).map((x, index) => currentPage + index + 1).filter(x => x <= pageCount).map((page, index) => (
-                    <Link key={7 + index} to={`/search?${getSearchParams(page)}`}>{page}</Link>
+                    <Link key={index} to={`/search?${getSearchParams(page)}`}>{page}</Link>
                 ))
             }
             {
@@ -65,8 +65,8 @@ export default function Paginator({ params, resultsCount }) {
             }
             {
                 currentPage < pageCount ? [
-                    <Link key={11} to={`/search?${getSearchParams(currentPage + 1).toString()}`}>Next</Link>,
-                    <Link key={12} to={`/search?${getSearchParams(pageCount).toString()}`}>Last</Link>
+                    <Link key={0} to={`/search?${getSearchParams(currentPage + 1).toString()}`}>Next</Link>,
+                    <Link key={1} to={`/search?${getSearchParams(pageCount).toString()}`}>Last</Link>
                 ] : []
             }
         </div>
