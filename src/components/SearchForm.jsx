@@ -30,8 +30,8 @@ export default function SearchForm() {
     const [ categorySelection, setCategorySelection ] = useState(initialCategorySelection);
 
     const initialLanguageSelection = {}
-    languages.forEach(language => {
-        initialLanguageSelection[language.key] = false;
+    Object.entries(languages).forEach(keyValue => {
+        initialLanguageSelection[keyValue[1]] = false;
     })
     const [ languageSelection, setLanguageSelection ] = useState(initialLanguageSelection);
 
@@ -78,7 +78,7 @@ export default function SearchForm() {
                     <SelectionInput options={categories} selection={categorySelection} selectionSetter={setCategorySelection} />
                 </Collapsible>
                 <Collapsible header="Languages" view={false}>
-                    <SelectionInput options={languages} selection={languageSelection} selectionSetter={setLanguageSelection} />
+                    <SelectionInput options={Object.values(languages)} selection={languageSelection} selectionSetter={setLanguageSelection} />
                 </Collapsible>
             </Form>
         </>
