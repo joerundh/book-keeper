@@ -38,25 +38,25 @@ const categories = [
     "Philosophy"
 ];
 
-const languages = [
-  { key: "en", value: "English" },
-  { key: "fr", value: "French" },
-  { key: "de", value: "German" },
-  { key: "nl", value: "Dutch" },
-  { key: "es", value: "Spanish" },
-  { key: "it", value: "Italian" },
-  { key: "el", value: "Greek" },
-  { key: "pt", value: "Portuguese" },
-  { key: "ru", value: "Russian" },
-  { key: "pl", value: "Polish" },
-  { key: "no", value: "Norwegian" },
-  { key: "tu", value: "Turkish" },
-  { key: "sv", value: "Swedish" },
-  { key: "da", value: "Danish" },
-  { key: "zh", value: "Chinese" },
-  { key: "ja", value: "Japanese" },
-  { key: "ar", value: "Arabic" },
-]
+const languages = {
+  en: "English",
+  fr: "French",
+  de: "German",
+  nl: "Dutch",
+  es: "Spanish",
+  it: "Italian",
+  es: "Spanish",
+  pt: "Portuguese",
+  ru: "Russian",
+  pl: "Polish",
+  no: "Norwegian",
+  tu: "Turkish",
+  sv: "Swedish",
+  da: "Danish",
+  zh: "Chinese",
+  ja: "Japanese",
+  ar: "Arabic"
+};
 
 const formats = {
     "text/html": "HTML",

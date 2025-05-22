@@ -43,16 +43,20 @@ export default function BookProfile({ book }) {
                         </div>
                     ) : (<></>)
                 }
-                <div>
-                    <p>Languages:</p>
-                    <InlineList separator={", "}>
-                        {
-                            book.languages.map((lang, index) => (
-                                <Link key={index} to={`/search?languages=${lang.toLowerCase()}`}>{languages.filter(arr => arr.key === lang)[0].value}</Link>
-                            ))
-                        }
-                    </InlineList>
-                </div>
+                {
+                    book.languages ? (
+                        <div>
+                            <p>Languages:</p>
+                            <InlineList separator={", "}>
+                                {
+                                    book.languages.map((lang, index) => (
+                                        <Link key={index} to={`/search?languages=${lang.toLowerCase()}`}>{languages[lang]}</Link>
+                                    ))
+                                }
+                            </InlineList>
+                        </div>
+                    ) : (<></>)
+                }
                 <p>Number of downloads: <b>{book["download_count"]}</b></p>
                 <p>Gutendex ID: <b>{book.id}</b></p>
             </div>

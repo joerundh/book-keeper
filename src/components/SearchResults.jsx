@@ -60,16 +60,20 @@ function ResultsListItem({ result }) {
                         </div>
                     ) : (<></>)
                 }
-                <div>
-                    <h4>Languages:</h4>
-                    <InlineList separator={", "}>
-                        {
-                            result.languages.map((lang, index) => (
-                                <Link key={index} to={`/search?languages=${lang.toLowerCase()}`}>{languages.filter(arr => arr.key === lang)[0].value}</Link>
-                            ))
-                        }
-                    </InlineList>
-                </div>
+                {
+                    result.languages ? (
+                        <div>
+                            <h4>Languages:</h4>
+                            <InlineList separator={", "}>
+                                {
+                                    result.languages.map((lang, index) => (
+                                        <Link key={index} to={`/search?languages=${lang}`}>{languages[lang]}</Link>
+                                    ))
+                                }
+                            </InlineList>
+                        </div>
+                    ) : (<></>)
+                }
             </div>
             <div style={optionsCSS}>
                 <FavouriteButton book={result} />
