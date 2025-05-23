@@ -3,11 +3,11 @@ import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom'
 
 import Home from './pages/Home.jsx'
-import List from './pages/List.jsx'
 import Categories from './pages/Categories.jsx'
 import Languages from './pages/Languages.jsx'
 import Book from './pages/Book.jsx'
 import Search from './pages/Search.jsx'
+import ReadingList from './pages/ReadingList.jsx'
 
 import './index.css'
 import App from './App.jsx'
@@ -107,6 +107,10 @@ const router = createBrowserRouter([
       {
         path: "/search",
         element: <Search />
+      },
+      {
+        path: "/readinglist",
+        element: <ReadingList />
       },
       {
         path: "*",

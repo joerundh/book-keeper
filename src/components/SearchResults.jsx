@@ -10,7 +10,7 @@ export default function SearchResults({ query, results }) {
         <>
             <ul className={styles.resultsList}>
             {
-                results.map((result, index) => <BookListItem key={index} result={result} />)
+                results.map((result, index) => <BookListItem key={index} book={result} />)
             }
             </ul>
         </>

@@ -1,22 +1,10 @@
 import { Outlet } from "react-router-dom"
-import { createContext } from "react"
+import { createContext, useEffect, useState } from "react"
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import './App.css'
 
 import Header from "./components/Header"
 import Footer from "./components/Footer"
-
-import Storage from './modules/Storage.mjs'
-import ReadingList from './modules/ReadingList.mjs'
-
-/*
-Local storage objects
-*/
-
-const favBooks = new Storage("fav-books");
-const favCategories = new Storage("fav-categories");
-
-const readingList = new ReadingList();
 
 /*
 Available categories and languages
@@ -114,12 +102,74 @@ Query clients
 const searchClient = new QueryClient();
 
 function App() {
+  /*
+  Favourites
+  */
+
+  const [ favourites, setFavourites ] = useState(JSON.parse(localStorage.getItem("Book Keeper Favourites") || "[]"));
+  useEffect(() => {
+    if (favourites.length) {
+      localStorage.setItem("Book Keeper Favourites", JSON.stringify(favourites));
+    } else {
+      localStorage.removeItem("Book Keeper Favourites")
+    }
+  }, [ favourites ])
+
+  const isInFavourites = book => favourites.map(obj => JSON.stringify(obj)).includes(JSON.stringify(book));
+
+  const addToFavourites = book => {
+    if (isInFavourites(book)) return false;
+    setFavourites([ ...favourites, book ]);
+    return true;
+  }
+
+  const removeFromFavourites = book => {
+    if (isInFavourites(book)) {
+      setFavourites(favourites.filter(obj => JSON.stringify(obj) !== JSON.stringify(book)));
+      return true;
+    }
+    return false;
+  }
+
+  /*
+  Reading list
+  */
+
+  const [ readingList, setReadingList ] = useState(JSON.parse(localStorage.getItem("Book Keeper Reading List") || "[]"));
+  useEffect(() => {
+    if (readingList.length) {
+      localStorage.setItem("Book Keeper Reading List", JSON.stringify(readingList));
+    } else {
+      localStorage.removeItem("Book Keeper Reading List")
+    }
+  }, [ readingList ])
+
+  const isInReadingList = book => readingList.map(obj => JSON.stringify(obj.book)).includes(JSON.stringify(book));
+
+  const addToReadingList = book => {
+    if (isInReadingList(book)) return false;
+    setReadingList([ ...readingList, {
+      book: book,
+      status: 0,
+      timeAdded: Date.now()
+    } ]);
+    return true;
+  }
+
+  const removeFromReadingList = book => {
+    if (isInReadingList(book)) {
+      setReadingList(readingList.filter(obj => JSON.stringify(obj.book) !== JSON.stringify(book)));
+      return true;
+    }
+    return false;
+  }
+
   return (
     <>
       <Header />
       <main>
         <QueryClientProvider client={searchClient}>
-          <BookContext.Provider value={{ favBooks, favCategories, readingList, categories, languages, formats }}>
+          <BookContext.Provider value={{ isInFavourites, addToFavourites, removeFromFavourites, isInReadingList, addToReadingList, removeFromReadingList, categories, languages, formats }}>
             <Outlet />
           </BookContext.Provider>
         </QueryClientProvider>

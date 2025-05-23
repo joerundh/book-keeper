@@ -2,10 +2,7 @@ import { useContext, useState } from "react"
 import { BookContext } from "../App";
 
 export default function FavouriteButton({ book }) {
-    const { favBooks } = useContext(BookContext);
-
-    const filteredFavList = favBooks.getList().filter(obj => obj.value.id === book.id);
-    const [ storageKey, setStorageKey ] = useState(filteredFavList.length ? filteredFavList[0].key : "");
+    const { isInFavourites, addToFavourites, removeFromFavourites } = useContext(BookContext);
 
     const buttonCSS = {
         display: "flex",
@@ -27,14 +24,14 @@ export default function FavouriteButton({ book }) {
     };
 
     const iconStyle = () => {
-        if (storageKey) {
+        if (isInFavourites(book)) {
             return favouritedIconCSS;
         } else {
             return unfavouritedIconCSS;
         }
     }
     const iconSrc = () => {
-        if (storageKey) {
+        if (isInFavourites(book)) {
             return `${location.origin}/src/assets/star-icon.png`;
         } else {
             return `${location.origin}/src/assets/star-empty-icon.png`;
@@ -42,7 +39,7 @@ export default function FavouriteButton({ book }) {
     }
 
     const label = () => {
-        if (storageKey) {
+        if (isInFavourites(book)) {
             return "Remove from favourites";
         } else {
             return "Add to favourites";
@@ -50,17 +47,15 @@ export default function FavouriteButton({ book }) {
     }
 
     const handleClick = () => {
-        if (storageKey) {
-            favBooks.removeValue(book);
-            setStorageKey("");
+        if (isInFavourites(book)) {
+            removeFromFavourites(book);
         } else {
-            const key = favBooks.addValue(book);
-            setStorageKey(key);
+            addToFavourites(book)
         }
     }
 
     return (
-        <button style={buttonCSS} onClick={() => handleClick()} title={storageKey ? "Remove from Favourites" : "Add to Favourites"}>
+        <button style={buttonCSS} onClick={() => handleClick()} title={label()}>
             <img style={iconStyle()} src={iconSrc()} />
             <span>{label()}</span>
         </button>
