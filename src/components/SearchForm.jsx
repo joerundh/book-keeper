@@ -68,10 +68,10 @@ export default function SearchForm() {
     return (
         <>
             <Form onSubmit={e => handleSubmit(e)} className={styles.searchForm}>
-                <h3>Search</h3>
-                <p>Enter a search query below, and/or select categories and languages in which to search for books.</p>
+                <h3>Advanced Search</h3>
+                <p>Enter a search query below, and/or select categories and languages to include.</p>
                 <div className={styles.textInputLine}>
-                    <input type="text" name="q" title="Search query" value={query} onChange={e => setQuery(e.target.value)} style={{ width: 300, padding: 5}} />
+                    <input type="text" name="q" title="Search query" placeholder="Enter a search query..." value={query} onChange={e => setQuery(e.target.value)} style={{ width: 300, padding: 5}} />
                     <button title="Submit search">Search</button>
                     <button title="Reset search" onClick={e => { e.preventDefault(); resetSearchForm(); }}>Reset</button>
                 </div>

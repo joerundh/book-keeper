@@ -100,7 +100,7 @@ export default function ReadingList() {
     return (
         <>
             <div style={componentCSS}>
-                <h2 style={{ gridArea: "header", width: "100%" }}>My reading list</h2>
+                <h2 style={{ gridArea: "header", width: "100%" }}>My Reading List</h2>
                 <div style={viewCSS}>
                     <p>View:</p>
                     <InlineList separator=" ">

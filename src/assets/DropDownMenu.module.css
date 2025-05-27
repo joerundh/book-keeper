@@ -20,7 +20,7 @@
 nav {
     text-align: left;
     width: 200px;
-    position: fixed;
+    position: absolute;
     transform-origin: top center;
     background-color: #202020;
     background-image: none;

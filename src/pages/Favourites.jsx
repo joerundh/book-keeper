@@ -1,7 +1,7 @@
 export default function Favourites() {
     return (
         <>
-            <h2>Favourites</h2>
+            <h2>My Favourites</h2>
         </>
     )
 }
