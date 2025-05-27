@@ -33,7 +33,7 @@ export default function Header() {
                         ))
                     }
                 </ul>
-                <a href="/languages">Languages</a>
+                <a href="/languages" onClick={e => linkClick(e)}>Languages</a>
             </DropDownMenu>
             <div className={styles.searchBar}>
                 <form method="GET" action="/search">
