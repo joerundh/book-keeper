@@ -14,16 +14,9 @@ export default function Header() {
     const [ searchQuery, setSearchQuery ] = useState("");
     const { categories } = useContext(BookContext)
 
-    const navigate = useNavigate();
-
-    const linkClick = e => {
-        e.preventDefault();
-        navigate(new URL(e.target.href).pathname);
-    }
-
     return (
         <header style={styles.header}>
-            <DropDownMenu title="Menu" closedIcon={"../assets/menu-icon.png"} openIcon={"../assets/close-icon.png"} side={"left"}>
+            <DropDownMenu title="Menu" closedIcon="../assets/menu-icon.png" openIcon="../assets/close-icon.png" side={"left"}>
                 <DropDownLink to="/">Home</DropDownLink>
                 <DropDownLink to="/search">Advanced Search</DropDownLink>
                 <DropDownLink to="/categories">Categories:</DropDownLink>
@@ -44,7 +37,7 @@ export default function Header() {
                     <button className={styles.submitSearch} title="Search"></button>
                 </form>
             </div>
-            <DropDownMenu title="Profile" iconAsset={"profile-icon.png"} side={"right"}>
+            <DropDownMenu title="Profile" closedIcon="../assets/profile-icon.png" openIcon="../assets/close-icon.png" side={"right"}>
                 <DropDownLink to="/favourites">My Favourites</DropDownLink>
                 <DropDownLink to="/readinglist">My Reading List</DropDownLink>
             </DropDownMenu>

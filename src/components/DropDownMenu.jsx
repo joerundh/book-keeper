@@ -8,6 +8,11 @@ export default function DropDownMenu({ title, closedIcon, openIcon, side, childr
     const menuRef = useRef(null)
     const [ top, setTop ] = useState(0);
     const [ left, setLeft ] = useState(0);
+    const [ icon, setIcon ] = useState(closedIcon);
+
+    useEffect(() => {
+        setIcon(open ? openIcon : closedIcon);
+    }, [ open ])
 
     const navStyle = {
         transform: open ? "scaleY(1)" : "scaleY(0)",
@@ -17,7 +22,7 @@ export default function DropDownMenu({ title, closedIcon, openIcon, side, childr
     }
 
     const buttonStyle = {
-        maskImage: `url("${open ? openIcon : closedIcon}")`
+        maskImage: `url("${icon}")`
     }
 
     const offClick = () => {
