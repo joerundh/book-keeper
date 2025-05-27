@@ -1,3 +1,5 @@
+// Unused here, but kept for record's sake
+
 export default function toKebabCase(str) {
     return str.toLowerCase()                                            // Convert all characters to lower case
                 .split(/\s+/)                                           // Divide words at whitespaces

@@ -7,8 +7,8 @@ import SearchResults from "../components/SearchResults";
 import Paginator from "../components/Paginator";
 import LoadingIcon from "../components/LoadingIcon";
 
-const languageSearchApi = async language => {
-    const res = await fetch(`https://gutendex.com/books?languages=${language}`);
+const languageSearchApi = async (language, page) => {
+    const res = await fetch(`https://gutendex.com/books?page=${page}&languages=${language}`);
     if (!res.ok) {
         throw new Error("Unable to search for books.")
     }
@@ -28,7 +28,7 @@ export default function Languages() {
                 <p></p>
                 <ul style={{ width: "80%", margin: "0 auto" }}>
                 {
-                    Object.entries(languages).map(([name, code]) => (
+                    Object.entries(languages).map(([code, name]) => (
                         <li key={code}><Link to={`/language/${code}`}>{name}</Link></li>
                     ))
                 }
@@ -51,7 +51,7 @@ export default function Languages() {
 
     const { data, isLoading, error } = useQuery({
         queryKey: [ "language", language, page ],
-        queryFn: () => languageSearchApi(language),
+        queryFn: () => languageSearchApi(language, page),
         enabled: !!language
     });
 
@@ -80,7 +80,7 @@ export default function Languages() {
         <>
             <h2>Books in {languages[language]}</h2>
             <Paginator route={`/language/${language}`} params={searchParams} resultsCount={data.count} />
-            <SearchResults query={category} results={data.results} />
+            <SearchResults query={language} results={data.results} />
             <Paginator route={`/language/${language}`} params={searchParams} resultsCount={data.count} />
         </>
     )

@@ -164,12 +164,46 @@ function App() {
     return false;
   }
 
+  const setStatus = (book, newStatus) => {
+    if (![ 0, 1, 2, 3 ].includes(newStatus)) {
+      return false;
+    }
+
+    const copy = readingList.map(entry => entry);
+
+    const index = copy.map(entry => entry.book).indexOf(book);
+    if (index < 0) {
+      return false;
+    }
+    if (copy[index].status === newStatus) {
+      return false;
+    }
+    copy[index].status = newStatus;
+
+    if (newStatus === 0) {
+      copy[index] = {
+        book: book,
+        status: 0,
+        timeAdded: Date.now()
+      }
+    } else if (newStatus === 1) {
+      copy[index].startedReading = Date.now();
+    } else if (newStatus === 2) {
+      copy[index].finishedReading = Date.now();
+    } else if (newStatus === 3) {
+      copy[index].stoppedReading = Date.now();
+    }
+
+    setReadingList(copy);
+    return true;
+  }
+
   return (
     <>
       <Header />
       <main>
         <QueryClientProvider client={searchClient}>
-          <BookContext.Provider value={{ isInFavourites, addToFavourites, removeFromFavourites, isInReadingList, addToReadingList, removeFromReadingList, categories, languages, formats }}>
+          <BookContext.Provider value={{ favourites, isInFavourites, addToFavourites, removeFromFavourites, readingList, setReadingList, isInReadingList, addToReadingList, removeFromReadingList, setStatus, categories, languages, formats }}>
             <Outlet />
           </BookContext.Provider>
         </QueryClientProvider>

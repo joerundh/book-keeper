@@ -7,6 +7,7 @@ import Categories from './pages/Categories.jsx'
 import Languages from './pages/Languages.jsx'
 import Book from './pages/Book.jsx'
 import Search from './pages/Search.jsx'
+import Favourites from './pages/Favourites.jsx';
 import ReadingList from './pages/ReadingList.jsx'
 
 import './index.css'
@@ -109,7 +110,11 @@ const router = createBrowserRouter([
         element: <Search />
       },
       {
-        path: "/readinglist",
+        path: "/favourites",
+        element: <Favourites />
+      },
+      {
+        path: "/reading",
         element: <ReadingList />
       },
       {
