@@ -24,7 +24,7 @@ export default function FavouriteButton({ book }) {
     };
     
     const iconSrc = () => {
-        return isInFavourites(book) ? `./assets/star-icon.png` : `./assets/star-empty-icon.png`;
+        return isInFavourites(book) ? `../assets/star-icon.png` : `../assets/star-empty-icon.png`;
     }
 
     const label = () => {

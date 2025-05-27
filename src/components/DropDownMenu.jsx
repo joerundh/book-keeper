@@ -17,7 +17,7 @@ export default function DropDownMenu({ title, iconAsset, side, children }) {
     }
 
     const buttonStyle = {
-        maskImage: `url("./assets/${open ? "close-icon.png" : iconAsset }")`
+        maskImage: `url("../assets/${open ? "close-icon.png" : iconAsset }")`
     }
 
     const offClick = () => {
