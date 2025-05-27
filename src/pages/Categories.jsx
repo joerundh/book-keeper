@@ -1,7 +1,7 @@
 import { useParams, useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import { BookContext } from "../App";
+import { BookContext } from "../App.jsx";
 import { useContext } from "react";
 import SearchResults from "../components/SearchResults";
 import Paginator from "../components/Paginator";

@@ -8,25 +8,6 @@ header {
     background-color: #181818;
 }
 
-.navButton {
-    width: 30px;
-    height: 30px;
-    padding: 0;
-    border-radius: 0;
-    background-color: grey;
-    border: 2px solid grey;
-    mask-image: url("../assets/three-horizontal-lines-outline-icon.png");
-    mask-size: 28px 28px;
-    mask-position: center center;
-    mask-repeat: no-repeat;
-}
-
-nav {
-    position: fixed;
-    transform-origin: top center;
-    transform: scale(0);
-}
-
 .searchBar form {
     display: flex;
     flex-direction: row;

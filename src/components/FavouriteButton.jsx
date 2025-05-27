@@ -1,4 +1,4 @@
-import { useContext, useState } from "react"
+import { useContext } from "react"
 import { BookContext } from "../App";
 
 export default function FavouriteButton({ book }) {
@@ -12,38 +12,23 @@ export default function FavouriteButton({ book }) {
         gap: 10,
         padding: "0 10"
     }
-    const favouritedIconCSS = {
+    const iconCSS = {
         width: 20,
         height: 20,
-        filter: "none"
+        filter: isInFavourites(book) ? "none" : "contrast(0%)"
     };
     const unfavouritedIconCSS = {
         width: 20,
         height: 20,
         filter: "contrast(0%)"
     };
-
-    const iconStyle = () => {
-        if (isInFavourites(book)) {
-            return favouritedIconCSS;
-        } else {
-            return unfavouritedIconCSS;
-        }
-    }
+    
     const iconSrc = () => {
-        if (isInFavourites(book)) {
-            return `${location.origin}/src/assets/star-icon.png`;
-        } else {
-            return `${location.origin}/src/assets/star-empty-icon.png`;
-        }
+        return isInFavourites(book) ? `${location.origin}/src/assets/star-icon.png` : `${location.origin}/src/assets/star-empty-icon.png`;
     }
 
     const label = () => {
-        if (isInFavourites(book)) {
-            return "Remove from favourites";
-        } else {
-            return "Add to favourites";
-        }
+        return isInFavourites(book) ? "Remove from favourites" : "Add to favourites";
     }
 
     const handleClick = () => {
@@ -56,7 +41,7 @@ export default function FavouriteButton({ book }) {
 
     return (
         <button style={buttonCSS} onClick={() => handleClick()} title={label()}>
-            <img style={iconStyle()} src={iconSrc()} />
+            <img style={iconCSS} src={iconSrc()} />
             <span>{label()}</span>
         </button>
     );

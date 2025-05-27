@@ -200,15 +200,15 @@ function App() {
 
   return (
     <>
-      <Header />
-      <main>
-        <QueryClientProvider client={searchClient}>
-          <BookContext.Provider value={{ favourites, isInFavourites, addToFavourites, removeFromFavourites, readingList, setReadingList, isInReadingList, addToReadingList, removeFromReadingList, setStatus, categories, languages, formats }}>
-            <Outlet />
-          </BookContext.Provider>
-        </QueryClientProvider>
-      </main>
-      <Footer />
+      <BookContext.Provider value={{ favourites, isInFavourites, addToFavourites, removeFromFavourites, readingList, setReadingList, isInReadingList, addToReadingList, removeFromReadingList, setStatus, categories, languages, formats }}>
+        <Header />
+        <main>
+          <QueryClientProvider client={searchClient}>
+              <Outlet />
+          </QueryClientProvider>
+        </main>
+        <Footer />
+      </BookContext.Provider>
     </>
   )
 }
