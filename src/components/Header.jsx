@@ -46,7 +46,7 @@ export default function Header() {
             </div>
             <DropDownMenu title="Profile" iconAsset={"profile-icon.png"} side={"right"}>
                 <DropDownLink to="/favourites">My Favourites</DropDownLink>
-                <DropDownLink to="/reading">My Reading List</DropDownLink>
+                <DropDownLink to="/readinglist">My Reading List</DropDownLink>
             </DropDownMenu>
         </header>
     )

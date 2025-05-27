@@ -114,7 +114,7 @@ const router = createBrowserRouter([
         element: <Favourites />
       },
       {
-        path: "/reading",
+        path: "/readinglist",
         element: <ReadingList />
       },
       {

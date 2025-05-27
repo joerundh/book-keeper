@@ -13,9 +13,9 @@ export default function ReadingListItem({ entry }) {
         padding: 0,
         display: "grid",
         gridTemplateAreas: `"cover info"\n"options options"`,
-        gridTemplateRows: "150px auto",
-        gridTemplateColumns: "100px auto",
-        gap: 10
+        gridTemplateRows: "225px auto",
+        gridTemplateColumns: "150px auto",
+        gap: 20
     };
 
     const infoCSS = {
@@ -56,7 +56,7 @@ export default function ReadingListItem({ entry }) {
 
     return (
         <li style={itemCSS}>
-            <CoverPhoto src={entry.book.formats["image/jpeg"]} width={100} height={150} style={{ gridArea: "cover" }} />
+            <CoverPhoto src={entry.book.formats["image/jpeg"]} width={150} height={225} style={{ gridArea: "cover" }} />
             <div style={infoCSS}>
                 <h4 style={{ width: "fit-content", textAlign: "left" }}>{entry.book.title}</h4>
                 <div>by <InlineList separator=", ">

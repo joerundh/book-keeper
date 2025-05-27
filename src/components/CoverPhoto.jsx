@@ -1,18 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import LoadingIcon from "./LoadingIcon";
 
 export default function CoverPhoto({ src, width, height }) {
+    const [ component, setComponent ] = useState(<LoadingIcon width={20} height={20} />);
     const [ loaded, setLoaded ] = useState(false);
     const [ error, setError ] = useState(false);
 
+    useEffect(() => {
+        setComponent(<p>(No cover)</p>);
+    }, [ error ]);
+
+    useEffect(() => {
+        setComponent(<img src={src} width={width} height={height} />);
+    }, [ loaded ]);
+
     const img = new Image();
-    new Promise((res, rej) => {
-        img.onload = res;
-        img.onerror = rej;
+    img.onload = () => setLoaded(true);
+    img.onerror = () => setError(true);
+
+    useEffect(() => {
         img.src = src;
-    })
-    .then(() => setLoaded(true))
-    .catch(() => setError(true));
+    }, [])
 
     const containerCSS = {
         width: width,
@@ -27,18 +35,12 @@ export default function CoverPhoto({ src, width, height }) {
         height: height
     }
 
+    
+
     return (
         <div style={containerCSS}>
             {
-                loaded ? (
-                    <img src={img.src} style={imageCSS} alt="Cover photo" title="Cover photo" />
-                ) : (
-                    error ? (
-                        <span>No cover</span>
-                    ) : (
-                        <LoadingIcon width={20} />
-                    )
-                )
+                component
             }
         </div>
     )
