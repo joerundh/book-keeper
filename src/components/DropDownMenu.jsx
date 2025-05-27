@@ -11,6 +11,7 @@ export default function DropDownMenu({ title, iconAsset, side, children }) {
 
     const navStyle = {
         transform: open ? "scaleY(1)" : "scaleY(0)",
+        transition: "transform 200ms ease-in-out",
         top: top + 40,
         left: left - 10
     }
@@ -55,13 +56,11 @@ export default function DropDownMenu({ title, iconAsset, side, children }) {
     return (
         <>
             <button className={styles.navButton} style={buttonStyle} title={title} onClick={e => toggleOpen(e)} ref={buttonRef}></button>
-            {
-                open ? ( <nav onClick={e => toggleOpen(e)} style={navStyle} ref={menuRef}>
-                    {
-                        children
-                    }
-                </nav>) : <></>
-            }
+            <nav onClick={e => toggleOpen(e)} style={navStyle} ref={menuRef}>
+                {
+                    children
+                }
+            </nav>
         </>
     )
 }

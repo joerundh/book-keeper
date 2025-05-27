@@ -18,7 +18,7 @@ export default function Book() {
     const params = useParams();
 
     const [ call, setCall ] = useState(false);
-    const { favBooks, readingList } = useContext(BookContext);
+    const { favourites, readingList } = useContext(BookContext);
 
     const { data, isLoading, error } = useQuery({
         queryKey: [ "book", params.id ],
@@ -36,22 +36,18 @@ export default function Book() {
     );
 
     if (!call) {
-        const filteredFavList = favBooks.getList().map(obj => obj.value).filter(obj => obj.id === params.id);
-        if (filteredFavList.length) {
-            return (
-                <BookProfile book={filteredFavList[0]} />
-            );
-        } else {
-            const filteredReadingList = readingList.getList().map(obj => obj.book).filter(obj => obj.id === params.id);
-            if (filteredReadingList.length) {
-                return (
-                    <BookProfile book={filteredReadingList[0]} />
-                );
-            } else {
+        const favouritesIndex = favourites.map(obj => obj.id).indexOf(params.id);
+        if (favouritesIndex < 0) {
+            const readingListIndex = readingList.map(obj => obj.id).indexOf(params.id);
+            if (readingListIndex < 0) {
                 setCall(true);
+                return loadingScreen();
+            } else {
+                return <BookProfile book={filteredReadingList[0]} />;
             }
+        } else {
+            return <BookProfile book={filteredFavList[0]} />;
         }
-        return loadingScreen();
     }
 
     if (isLoading) {

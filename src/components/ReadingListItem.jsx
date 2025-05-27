@@ -58,7 +58,7 @@ export default function ReadingListItem({ entry }) {
         <li style={itemCSS}>
             <CoverPhoto src={entry.book.formats["image/jpeg"]} width={150} height={225} style={{ gridArea: "cover" }} />
             <div style={infoCSS}>
-                <h4 style={{ width: "fit-content", textAlign: "left" }}>{entry.book.title}</h4>
+                <h3 style={{ width: "fit-content", textAlign: "left" }}><Link to={`/book/${entry.book.id}`}>{entry.book.title}</Link></h3>
                 <div>by <InlineList separator=", ">
                     {
                         entry.book.authors.map((author, index) => {
