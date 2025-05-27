@@ -6,6 +6,9 @@ import { useNavigate } from "react-router-dom";
 import styles from "../assets/Header.module.css";
 
 import { BookContext } from "../App.jsx";
+import DropDownLink from "./DropDownLink.jsx";
+
+
 
 export default function Header() {
     const [ searchQuery, setSearchQuery ] = useState("");
@@ -21,19 +24,19 @@ export default function Header() {
     return (
         <header style={styles.header}>
             <DropDownMenu title="Menu" iconAsset={"menu-icon.png"} side={"left"}>
-                <a href="/" onClick={e => linkClick(e)}>Home</a>
-                <a href="/search" onClick={e => linkClick(e)}>Search</a>
-                <a href="/categories" onClick={e => linkClick(e)}>Categories:</a>
+                <DropDownLink to="/">Home</DropDownLink>
+                <DropDownLink to="/search">Advanced Search</DropDownLink>
+                <DropDownLink to="/categories">Categories:</DropDownLink>
                 <ul>
                     {
                         categories.map((category, index) => (
                             <li key={index}>
-                                <a href={`/category/${category.toLowerCase()}`} onClick={e => linkClick(e)}>{category}</a>
+                                <DropDownLink key={index} to={`/category/${category.toLowerCase()}`}>{category}</DropDownLink>
                             </li>
                         ))
                     }
                 </ul>
-                <a href="/languages" onClick={e => linkClick(e)}>Languages</a>
+                <DropDownLink to="/languages">Languages</DropDownLink>
             </DropDownMenu>
             <div className={styles.searchBar}>
                 <form method="GET" action="/search">
@@ -42,8 +45,8 @@ export default function Header() {
                 </form>
             </div>
             <DropDownMenu title="Profile" iconAsset={"profile-icon.png"} side={"right"}>
-                <a href="/favourites" onClick={e => linkClick(e)}>My favourites</a>
-                <a href="reading" onClick={e => linkClick(e)}>My reading list</a>
+                <DropDownLink to="/favourites">My Favourites</DropDownLink>
+                <DropDownLink to="/reading">My Reading List</DropDownLink>
             </DropDownMenu>
         </header>
     )
