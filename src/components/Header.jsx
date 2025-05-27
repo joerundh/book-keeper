@@ -23,7 +23,7 @@ export default function Header() {
 
     return (
         <header style={styles.header}>
-            <DropDownMenu title="Menu" iconAsset={"menu-icon.png"} side={"left"}>
+            <DropDownMenu title="Menu" closedIcon={"../assets/menu-icon.png"} openIcon={"../assets/close-icon.png"} side={"left"}>
                 <DropDownLink to="/">Home</DropDownLink>
                 <DropDownLink to="/search">Advanced Search</DropDownLink>
                 <DropDownLink to="/categories">Categories:</DropDownLink>

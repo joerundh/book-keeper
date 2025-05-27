@@ -2,7 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import DropDownLink from "./DropDownLink";
 import styles from "../assets/DropDownMenu.module.css";
 
-export default function DropDownMenu({ title, iconAsset, side, children }) {
+export default function DropDownMenu({ title, closedIcon, openIcon, side, children }) {
     const [ open, setOpen ] = useState(false);
     const buttonRef = useRef(null);
     const menuRef = useRef(null)
@@ -17,7 +17,7 @@ export default function DropDownMenu({ title, iconAsset, side, children }) {
     }
 
     const buttonStyle = {
-        maskImage: `url("./src/assets/${open ? "close-icon.png" : iconAsset }")`
+        maskImage: `url("${open ? openIcon : closedIcon}")`
     }
 
     const offClick = () => {
