@@ -1,8 +1,9 @@
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import { BookContext } from "../App";
 
 export default function FavouriteButton({ book }) {
     const { isInFavourites, addToFavourites, removeFromFavourites } = useContext(BookContext);
+    const [ isFavourited, setIsFavourited ] = useState(isInFavourites(book));
 
     const buttonCSS = {
         display: "flex",
@@ -15,29 +16,23 @@ export default function FavouriteButton({ book }) {
     const iconCSS = {
         width: 20,
         height: 20,
-        filter: isInFavourites(book) ? "none" : "contrast(0%)"
-    };
-    const unfavouritedIconCSS = {
-        width: 20,
-        height: 20,
-        filter: "contrast(0%)"
+        filter: isFavourited ? "none" : "contrast(0%)"
     };
     
-    const iconSrc = () => {
-        return isInFavourites(book) ? `./star-icon.png` : `./star-empty-icon.png`;
-    }
-
-    const label = () => {
-        return isInFavourites(book) ? "Remove from favourites" : "Add to favourites";
-    }
+    const iconSrc = () => isInFavourites(book) ? "/star-icon.png" : "/star-empty-icon.png";
+    const label = () => isInFavourites(book) ? "Remove from favourites" : "Add to favourites";
 
     const handleClick = () => {
-        if (isInFavourites(book)) {
-            removeFromFavourites(book);
-        } else {
-            addToFavourites(book)
-        }
+        setIsFavourited(!isFavourited);
     }
+
+    useEffect(() => {
+        if (isFavourited) {
+            addToFavourites(book);
+        } else {
+            removeFromFavourites(book);
+        }
+    }, [ isFavourited ])
 
     return (
         <button style={buttonCSS} onClick={() => handleClick()} title={label()}>
