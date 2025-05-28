@@ -36,7 +36,7 @@ export default function ReadingListButton({ book }) {
 
     return (
         <button style={buttonCSS} onClick={() => handleClick()} title={label()}>
-            <img style={iconStyle()} src={iconSrc()} />
+            <img style={iconCSS} src={iconSrc()} />
             <span>{label()}</span>
         </button>
     );
