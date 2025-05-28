@@ -8,7 +8,9 @@ import styles from "../assets/Header.module.css";
 import { BookContext } from "../App.jsx";
 import DropDownLink from "./DropDownLink.jsx";
 
-
+import menuIcon from "../assets/menu-icon.png";
+import profileIcon from "../assets/profile-icon.png";
+import closeIcon from "../assets/close-icon.png";
 
 export default function Header() {
     const [ searchQuery, setSearchQuery ] = useState("");
@@ -16,7 +18,7 @@ export default function Header() {
 
     return (
         <header style={styles.header}>
-            <DropDownMenu title="Menu" closedIcon="./src/assets/menu-icon.png" openIcon="./src/assets/close-icon.png" side="left">
+            <DropDownMenu title="Menu" closedIcon={menuIcon} openIcon={closeIcon} side="left">
                 <DropDownLink to="/">Home</DropDownLink>
                 <DropDownLink to="/search">Advanced Search</DropDownLink>
                 <DropDownLink to="/categories">Categories:</DropDownLink>
@@ -37,7 +39,7 @@ export default function Header() {
                     <button className={styles.submitSearch} title="Search"></button>
                 </form>
             </div>
-            <DropDownMenu title="Profile" closedIcon="./src/assets/profile-icon.png" openIcon="./src/assets/close-icon.png" side="right">
+            <DropDownMenu title="Profile" closedIcon={profileIcon} openIcon={closeIcon} side="right">
                 <DropDownLink to="/favourites">My Favourites</DropDownLink>
                 <DropDownLink to="/readinglist">My Reading List</DropDownLink>
             </DropDownMenu>
