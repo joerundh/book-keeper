@@ -31,19 +31,18 @@ export default function DropDownMenu({ title, closedIcon, openIcon, side, childr
         }
     }
 
+    const offClick = () => {
+        window.removeEventListener("click", offClick);
+        setOpen(false);
+    }
+
     const handleClick = event => {
-        if (event.target === buttonRef.current || event.target === menuRef.current) {
-            if (open) {
-                window.removeEventListener("click", handleClick);
-                setOpen(false)
-            } else {
-                window.addEventListener("click", handleClick);
-                setOpen(true)
-            }
+        if (open) {
+            window.removeEventListener("click", offClick)
         } else {
-            window.removeEventListener("click", handleClick);
-            setOpen(false);
+            setTimeout(() => { window.addEventListener("click", offClick); });
         }
+        setOpen(!open)
     }
 
     useEffect(() => {
