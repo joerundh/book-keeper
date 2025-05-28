@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import SelectionInput from "./SelectionInput";
 import { BookContext } from "../App";
 import Collapsible from "./Collapsible";
@@ -6,7 +6,7 @@ import styles from "../assets/SearchForm.module.css";
 import { Form, useNavigate } from "react-router-dom";
 
 const filterSelection = obj => {
-    return Object.entries(obj).filter(([key, value]) => value ).map(([key, value]) => key);
+    return Object.entries(obj).filter(([key, value]) => value).map(([key, value]) => key);
 }
 
 export default function SearchForm() {
@@ -30,9 +30,9 @@ export default function SearchForm() {
     const [ categorySelection, setCategorySelection ] = useState(initialCategorySelection);
 
     const initialLanguageSelection = {}
-    Object.entries(languages).forEach(keyValue => {
-        initialLanguageSelection[keyValue[1]] = false;
-    })
+    Object.keys(languages).forEach(key => {
+        initialLanguageSelection[key] = false;
+    });
     const [ languageSelection, setLanguageSelection ] = useState(initialLanguageSelection);
 
     /*
@@ -41,7 +41,6 @@ export default function SearchForm() {
 
     const handleSubmit = e => {
         e.preventDefault();
-        console.log(e.target)
         const selectedCategories = filterSelection(categorySelection);
         const selectedLanguages = filterSelection(languageSelection);
         if (query || selectedCategories.length || selectedLanguages.length) {
@@ -50,7 +49,7 @@ export default function SearchForm() {
                 params.append("q", query);
             }
             if (selectedCategories.length) {
-                params.append("categories", selectedCategories.join(","));
+                params.append("categories", selectedCategories.join(",").toLowerCase());
             }
             if (selectedLanguages.length) {
                 params.append("languages", selectedLanguages.join(","));
@@ -64,6 +63,10 @@ export default function SearchForm() {
         setCategorySelection([])
         setLanguageSelection([]);
     }
+
+    useEffect(() => {
+        console.log(languageSelection)
+    }, [ languageSelection ])
 
     return (
         <>
@@ -79,7 +82,7 @@ export default function SearchForm() {
                     <SelectionInput options={categories} selection={categorySelection} selectionSetter={setCategorySelection} />
                 </Collapsible>
                 <Collapsible header="Languages" view={false}>
-                    <SelectionInput options={Object.values(languages)} selection={languageSelection} selectionSetter={setLanguageSelection} />
+                    <SelectionInput options={languages} selection={languageSelection} selectionSetter={setLanguageSelection} />
                 </Collapsible>
             </Form>
         </>

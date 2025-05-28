@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useEffect } from "react";
 
 export default function SelectionInput({ options, selection, selectionSetter }) {
     const containerStyle = {
@@ -9,32 +9,30 @@ export default function SelectionInput({ options, selection, selectionSetter }) 
         columnGap: 20
     };
 
-    const toggleCheckbox = (element, key) => {
+    const toggleCheckbox = setKey => {
         const newSelection = {};
-        Object.assign(newSelection, selection);
-        newSelection[key] = !newSelection[key];
+        Object.entries(selection).forEach(([ key, value ]) => {
+            newSelection[key] = key === setKey ? !selection[key] : selection[key];
+        });
         selectionSetter(newSelection);
     }
 
     return (
         <div style={containerStyle}>
             {
-            options.map((option, index) => {
-                let label, key, checked;
-                if (typeof option === "object") {
-                    label = option.value;
-                    key = option.key;
-                    checked = selection[key];
-                } else {
-                    label = `${option}`;
-                    key = option;
-                    checked = selection[option];
-                }
-
-                return (
-                    <label key={index} title={label} style={{ cursor: "pointer" }}><input type="checkbox" checked={checked} onChange={e => toggleCheckbox(e.target, key)} /> {label}</label>
-                );
-            })
-        }</div>
+                options instanceof Array ? 
+                    options.map((option, index) => {
+                        return (
+                            <label key={index} title={option} style={{ cursor: "pointer" }}><input type="checkbox" checked={selection[option]} onChange={e => toggleCheckbox(option)} /> {option}</label>
+                        );
+                    })
+                :
+                    Object.entries(options).map(([key, value]) => {
+                        return (
+                            <label key={key} title={value} style={{ cursor: "pointer" }}><input type="checkbox" checked={selection[key]} onChange={e => toggleCheckbox(key)} /> {value}</label>
+                        );
+                    })
+            }
+        </div>
     )
 }

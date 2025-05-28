@@ -72,8 +72,7 @@ const languages = {
   te: "Telugu",
   bo: "Tibetan",
   cy: "Welsh",
-  yi: "Yiddish",
-  
+  yi: "Yiddish"
 };
 
 const formats = {

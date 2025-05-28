@@ -29,10 +29,11 @@ export default function Search() {
         params.set("search", query);
     }
     if (categories) {
-        params.set("topic", categories.map(str => str.toLowerCase()).join(","));
+        console.log(decodeURIComponent(categories))
+        params.set("topic", decodeURIComponent(categories));
     }
     if (languages) {
-        params.set("languages", languages.join(","));
+        params.set("languages", decodeURIComponent(languages));
     }
 
     const { data, isLoading, error } = useQuery({
