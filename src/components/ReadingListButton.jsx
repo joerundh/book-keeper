@@ -32,9 +32,9 @@ export default function ReadingListButton({ book }) {
     }
     const iconSrc = () => {
         if (isInReadingList(book)) {
-            return `${location.origin}/src/assets/book-filled-icon.png`;
+            return `./book-filled-icon.png`;
         } else {
-            return `${location.origin}/src/assets/book-outline-icon.png`;
+            return `./book-outline-icon.png`;
         }
     }
 

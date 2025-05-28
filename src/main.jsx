@@ -78,7 +78,7 @@ const router = createBrowserRouter([
         element: <Languages />
       },
       {
-        path: "language",
+        path: "/language",
         element: <Outlet />,
         children: [
           {
