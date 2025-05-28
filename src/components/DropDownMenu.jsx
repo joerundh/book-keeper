@@ -1,5 +1,4 @@
 import { useRef, useState, useEffect } from "react";
-import DropDownLink from "./DropDownLink";
 import styles from "../assets/DropDownMenu.module.css";
 
 export default function DropDownMenu({ title, closedIcon, openIcon, side, children }) {
@@ -8,11 +7,6 @@ export default function DropDownMenu({ title, closedIcon, openIcon, side, childr
     const menuRef = useRef(null)
     const [ top, setTop ] = useState(0);
     const [ left, setLeft ] = useState(0);
-    const [ icon, setIcon ] = useState(closedIcon);
-
-    useEffect(() => {
-        setIcon(open ? openIcon : closedIcon);
-    }, [ open ])
 
     const navStyle = {
         transform: open ? "scaleY(1)" : "scaleY(0)",
@@ -22,12 +16,7 @@ export default function DropDownMenu({ title, closedIcon, openIcon, side, childr
     }
 
     const buttonStyle = {
-        maskImage: `url("${icon}")`
-    }
-
-    const offClick = () => {
-        window.removeEventListener("click", offClick);
-        setOpen(false);
+        maskImage: `url("${open ? openIcon : closedIcon}")`
     }
 
     const setPosition = () => {
@@ -42,16 +31,26 @@ export default function DropDownMenu({ title, closedIcon, openIcon, side, childr
         }
     }
 
-    const toggleOpen = event => {
-        event.stopPropagation();
-        if (!open) {
-            setPosition();
-            window.addEventListener("click", offClick);
+    const handleClick = event => {
+        if (event.target === buttonRef.current || event.target === menuRef.current) {
+            if (open) {
+                window.removeEventListener("click", handleClick);
+                setOpen(false)
+            } else {
+                window.addEventListener("click", handleClick);
+                setOpen(true)
+            }
         } else {
-            window.removeEventListener("click", offClick)
+            window.removeEventListener("click", handleClick);
+            setOpen(false);
         }
-        setOpen(!open);
     }
+
+    useEffect(() => {
+        if (open) {
+            setPosition();
+        }
+    }, [ open ])
 
     const resizeObserver = new ResizeObserver((entries) => {
         setPosition();
@@ -60,8 +59,8 @@ export default function DropDownMenu({ title, closedIcon, openIcon, side, childr
 
     return (
         <>
-            <button className={styles.navButton} style={buttonStyle} title={title} onClick={e => toggleOpen(e)} ref={buttonRef}></button>
-            <nav onClick={e => toggleOpen(e)} style={navStyle} ref={menuRef}>
+            <button className={styles.navButton} style={buttonStyle} title={title} onClick={e => handleClick(e)} ref={buttonRef}></button>
+            <nav onClick={e => handleClick(e)} style={navStyle} ref={menuRef}>
                 {
                     children
                 }

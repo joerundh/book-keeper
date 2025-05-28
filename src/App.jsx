@@ -126,6 +126,9 @@ function App() {
   const removeFromFavourites = book => {
     if (isInFavourites(book)) {
       setFavourites(favourites.filter(obj => JSON.stringify(obj) !== JSON.stringify(book)));
+      if (!favourites.length) {
+        localStorage.removeItem("Book Keeper Favourites");
+      }
       return true;
     }
     return false;
@@ -159,6 +162,9 @@ function App() {
   const removeFromReadingList = book => {
     if (isInReadingList(book)) {
       setReadingList(readingList.filter(obj => JSON.stringify(obj.book) !== JSON.stringify(book)));
+      if (!readingList.length) {
+        localStorage.removeItem("Book Keeper Reading List");
+      }
       return true;
     }
     return false;

@@ -8,7 +8,7 @@ export default function ReadingList() {
 
     const [ view, setView ] = useState(JSON.parse(localStorage.getItem("Book Keeper Reading List View") || `{ "0": true, "1": true, "2": true, "3": true }`));
     useEffect(() => {
-        if (Object.is(view, { 0: true, 1: true, 2: true, 3: true })) {
+        if (JSON.stringify(view) === JSON.stringify({ 0: true, 1: true, 2: true, 3: true })) {
             localStorage.removeItem("Book Keeper Reading List View");
         } else {
             localStorage.setItem("Book Keeper Reading List View", JSON.stringify(view));

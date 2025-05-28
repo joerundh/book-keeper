@@ -8,7 +8,7 @@ export default function Favourites() {
 
     const [ view, setView ] = useState(JSON.parse(localStorage.getItem("Book Keeper Favourites View") || `{ "0": true, "1": true }`));
     useEffect(() => {
-        if (Object.is(view, { 0: true, 1: true })) {
+        if (JSON.stringify(view) === JSON.stringify({ 0: true, 1: true })) {
             localStorage.removeItem("Book Keeper Favourites View");
         } else {
             localStorage.setItem("Book Keeper Favourites View", JSON.stringify(view));

@@ -3,7 +3,7 @@ import { BookContext } from "../App";
 
 export default function ReadingListButton({ book }) {
     const { isInReadingList, addToReadingList, removeFromReadingList } = useContext(BookContext);
-    const { isReading, setIsReading } = useState(isInReadingList(book));
+    const [ isReading, setIsReading ] = useState(isInReadingList(book));
 
     const buttonCSS = {
         display: "flex",
@@ -13,18 +13,17 @@ export default function ReadingListButton({ book }) {
         gap: 10,
         padding: "0 10"
     }
+
     const iconCSS = {
         width: 20,
         height: 20,
         filter: isReading ? "none" : "contrast(0%)"
     };
 
-    const iconSrc = () => isReading ? "/book-filled-icon.png" : "/book-outline-icon.png";
+    const iconSrc = () => isReading ? "./src/assets/book-filled-icon.png" : "./src/assets/book-outline-icon.png";
     const label = () => isReading ? "Remove from Reading List" : "Add to Reading List";
 
-    const handleClick = () => {
-        setIsReading(!isReading);
-    }
+    const handleClick = () => setIsReading(!isReading);
 
     useEffect(() => {
         if (isReading) {
@@ -35,7 +34,7 @@ export default function ReadingListButton({ book }) {
     }, [ isReading ]);
 
     return (
-        <button style={buttonCSS} onClick={() => handleClick()} title={label()}>
+        <button style={buttonCSS} onClick={handleClick} title={label()}>
             <img style={iconCSS} src={iconSrc()} />
             <span>{label()}</span>
         </button>

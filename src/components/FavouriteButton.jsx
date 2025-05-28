@@ -19,7 +19,7 @@ export default function FavouriteButton({ book }) {
         filter: isFavourited ? "none" : "contrast(0%)"
     };
     
-    const iconSrc = () => isInFavourites(book) ? "/star-icon.png" : "/star-empty-icon.png";
+    const iconSrc = () => isInFavourites(book) ? "./src/assets/star-icon.png" : "./src/assets/star-empty-icon.png";
     const label = () => isInFavourites(book) ? "Remove from favourites" : "Add to favourites";
 
     const handleClick = () => {
