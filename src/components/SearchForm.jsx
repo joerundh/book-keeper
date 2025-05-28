@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import SelectionInput from "./SelectionInput";
 import { BookContext } from "../App";
 import Collapsible from "./Collapsible";
