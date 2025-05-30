@@ -1,5 +1,7 @@
 import { useContext, useEffect, useState } from "react"
 import { BookContext } from "../App";
+import bookIcon from "../assets/book-filled-icon.png";
+import bookOutlineIcon from "../assets/book-outline-icon.png";
 
 export default function ReadingListButton({ book }) {
     const { isInReadingList, addToReadingList, removeFromReadingList } = useContext(BookContext);
@@ -20,7 +22,7 @@ export default function ReadingListButton({ book }) {
         filter: isReading ? "none" : "contrast(0%)"
     };
 
-    const iconSrc = () => isReading ? "./src/assets/book-filled-icon.png" : "./src/assets/book-outline-icon.png";
+    const icon = () => isReading ? bookIcon : bookOutlineIcon;
     const label = () => isReading ? "Remove from Reading List" : "Add to Reading List";
 
     const handleClick = () => setIsReading(!isReading);
@@ -35,7 +37,7 @@ export default function ReadingListButton({ book }) {
 
     return (
         <button style={buttonCSS} onClick={handleClick} title={label()}>
-            <img style={iconCSS} src={iconSrc()} />
+            <img style={iconCSS} src={icon()} />
             <span>{label()}</span>
         </button>
     );

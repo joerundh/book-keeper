@@ -1,5 +1,7 @@
 import { useContext, useEffect, useState } from "react"
 import { BookContext } from "../App";
+import starIcon from "../assets/star-icon.png";
+import starOutlineIcon from "../assets/star-empty-icon.png";
 
 export default function FavouriteButton({ book }) {
     const { isInFavourites, addToFavourites, removeFromFavourites } = useContext(BookContext);
@@ -19,7 +21,7 @@ export default function FavouriteButton({ book }) {
         filter: isFavourited ? "none" : "contrast(0%)"
     };
     
-    const iconSrc = () => isInFavourites(book) ? "./src/assets/star-icon.png" : "./src/assets/star-empty-icon.png";
+    const icon = () => isInFavourites(book) ? starIcon : starOutlineIcon;
     const label = () => isInFavourites(book) ? "Remove from favourites" : "Add to favourites";
 
     const handleClick = () => {
@@ -36,7 +38,7 @@ export default function FavouriteButton({ book }) {
 
     return (
         <button style={buttonCSS} onClick={() => handleClick()} title={label()}>
-            <img style={iconCSS} src={iconSrc()} />
+            <img style={iconCSS} src={icon()} />
             <span>{label()}</span>
         </button>
     );
