@@ -84,6 +84,9 @@ main {
   width: 100%;
   padding: 10px;
   text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 footer {

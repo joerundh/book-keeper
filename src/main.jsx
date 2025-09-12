@@ -1,6 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider, Outlet, Link } from 'react-router-dom'
 
 import Home from './pages/Home.jsx'
 import Categories from './pages/Categories.jsx'
@@ -20,7 +20,8 @@ Standard error elements
 const NotFound = () => {
   return (
     <>
-      <h2>404 Not found</h2>
+      <h2>Not found</h2>
+      <p>The page you were looking for was not found. Click <Link to={"/"}>here</Link> to go to the front page.</p>
     </>
   )
 };
@@ -35,8 +36,8 @@ const NoId = () => (
 const Error = () => {
   return (
     <>
-      <h2>Oh no!</h2>
-      <p>An error occured somewhere! Try something else.</p>
+      <h2>An error occurred</h2>
+      <p>Try again later.</p>
     </>
   )
 };

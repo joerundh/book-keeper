@@ -212,6 +212,7 @@ function App() {
               <Outlet />
           </QueryClientProvider>
         </main>
+        <Footer />
       </BookContext.Provider>
     </>
   )
